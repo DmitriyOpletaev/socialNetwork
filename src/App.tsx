@@ -53,7 +53,6 @@ class App extends Component<MapProps & DispatchProps> {
         }
         return (
             <div className='app-wrapper'>
-                <Preloader/>
                 <HeaderContainer/>
                 <Nav/>
                 <Route exact path='/homepage' render={() => <Homepage/>}/>
