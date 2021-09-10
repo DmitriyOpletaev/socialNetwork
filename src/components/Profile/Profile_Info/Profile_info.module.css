@@ -1,0 +1,129 @@
+.ProfileInfoContainer {
+    background: linear-gradient(to right, rgba(252, 234, 1, 0.69), rgba(0, 0, 255, 0.67));
+
+}
+
+.imgScenery {
+    width: 100%;
+}
+
+.userContainer {
+    display: grid;
+    grid-template-columns: 3fr 9fr;
+}
+
+.container_Photo {
+    position: relative;
+    height: 8.5em;
+    width: 7em;
+}
+
+.user_photo {
+    height: 8em;
+    padding-left: 0.5em;
+    border-radius: 2.6em 2.6em;
+}
+
+.download_photo img {
+    height: 1em;
+    position: inherit;
+}
+
+.download_photo input {
+    height: 1.9em;
+    position: absolute;
+    width: 2em;
+    top: 0.2em;
+    opacity: 0;
+    z-index: 2;
+
+}
+
+.download_photo {
+    height: 1em;
+    width: 1em;
+    overflow: hidden;
+    position: absolute;
+    top: 0em;
+    left: 0.12em;
+    opacity: .5;
+    transition: 0.5s;
+}
+
+.download_photo:hover {
+    transform: scale(1.1);
+    opacity: 0.8;
+}
+
+.InfoUser {
+    padding: 0 2em;
+    text-align: center;
+}
+
+
+.null_Status {
+    color: rgba(3, 3, 3, 0.5);
+    font-size: 0.4em;
+    font-style: italic;
+}
+
+.Status {
+    font-size: 0.5em;
+
+}
+
+.Input_Status {
+    background: rgba(255, 255, 255, 0);
+    border: none;
+}
+
+
+.iconsContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 0.4em;
+}
+
+.iconsContainer div {
+    transition: transform 0.5s;
+    user-select: none;
+}
+
+.iconsContainer div:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.icons {
+    height: 1em
+}
+
+.about_me_container {
+    font-size: 0.7em;
+    position: relative;
+}
+
+.about_me_container span {
+    color: #640882;
+}
+
+.looking_for_a_job_container {
+    font-size: 0.7em;
+}
+
+.looking_for_a_job_container span {
+    color: #640882;
+}
+
+.contacts {
+    font-size: 0.7em;
+    text-align: left;
+}
+
+.editButton {
+    position: absolute;
+    top:-5em;
+    right: -3em;
+
+}

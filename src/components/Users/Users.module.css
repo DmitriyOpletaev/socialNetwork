@@ -1,0 +1,257 @@
+.wrapper{
+    background: #232323;
+    height: fit-content;
+}
+.mainTitle {
+    text-align: center;
+    overflow: hidden;
+    padding-bottom: 1em;
+}
+
+.usersTitleGeneral{
+    font-size: 4em;
+    text-shadow: 0 0 5px #FFF, 0 0 10px #FFF, 0 0 15px #FFF, 0 0 20px #49ff18, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+    color: #FFFFFF;
+    transition: 0.5s text-shadow;
+    cursor: pointer;
+    user-select: none;
+    text-decoration: none;
+}
+.usersTitleGeneral:hover{
+    text-shadow: 0 0 5px #FFF, 0 0 10px #0033ff, 0 0 15px #FFF, 0 0 20px #fa56c0, 0 0 30px #49FF18, 0 0 40px #49FF18, 0 0 55px #49FF18, 0 0 75px #49ff18;
+}
+
+.selected_page, .selected_page_active{
+    display: inline-block;
+    color: white;
+    font-size: 1.5em;
+    margin: 0 0.2em;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.3s;
+
+}
+.selected_page_active{
+    color: #ffffff;
+    font-size: 2em;
+    margin: 0 0.3em;
+    text-shadow: 0 0 5px #FFF, 0 0 5px #FFF, 0 0 15px #FFF, 0 0 10px #49ff18, 0 0 5px #49FF18, 0 0 4px #49FF18, 0 0 5px #49FF18, 0 0 10px #49ff18;
+    position: relative;
+}
+.selected_page:hover{
+    transform: scale(1.2);
+}
+.selected_page_elipsis{
+    display: inline-block;
+    color: white;
+    font-size: 1.5em;
+    margin: 0 0.2em;
+    cursor: default;
+    user-select: none;
+}
+
+
+.selected_pages_container{
+    position: relative;
+}
+/*кнопки Prev Next*/
+.prev_Active, .prev_noActive, .next_Active, .next_noActive{
+    position: absolute;
+    bottom: 0.1em;
+    display: inline-block;
+    padding: 0 0.3em;
+    background: #2e7922;
+    color: white;
+    font-size: 1.5em;
+    margin: 0 0.5em;
+    cursor: pointer;
+    user-select: none;
+    transition: 0.3s;
+    border: rgba(201, 152, 200, 0.82) solid 1px;
+    border-radius: 2em 2em;
+}
+.prev_Active, .prev_noActive{
+    left: 2em
+}
+.next_Active, .next_noActive{
+    right: 2em;
+}
+.prev_noActive, .next_noActive{
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.39);
+    border: rgba(255, 255, 255, 0.39) solid 1px;
+    font-size: 1.5em;
+    margin: 0 0.2em;
+    cursor: default;
+    background: rgba(46, 121, 34, 0.29);
+
+}
+.prev_Active:active, .next_Active:active{
+    transform: scale(0.95);
+}
+.prev_Active:hover, .next_Active:hover {
+    box-shadow: 0 0 5px #FFF, 0 0 5px #FFF, 0 0 15px #FFF, 0 0 10px #49ff18, 0 0 5px #49FF18, 0 0 4px #49FF18, 0 0 5px #49FF18, 0 0 10px #49ff18;;
+}
+
+
+
+
+
+
+.wrapper_of_Users{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1em ;
+}
+@media (max-width: 991px) {
+    .wrapper_of_Users{
+        grid-template-columns:1fr;
+
+    }
+
+}
+@media (min-width: 2000px) {
+    .wrapper_of_Users{
+        grid-template-columns:1fr 1fr 1fr;
+
+    }
+
+}
+
+
+.userContainer {
+    display: grid;
+    grid-template-columns: 2.5fr 7fr 1fr;
+    margin: 0em 0.2em 1.2em 0;
+    height: 13.5em;
+    background: #bfcdf3;
+
+}
+
+.button_and_photo_container {
+    padding: 0.5em 0.7em 0 0.7em;
+}
+
+.photoContainer {
+    height: 10em;
+    width: 10em;
+    overflow: hidden;
+    display: flex;
+    align-content: center;
+    text-align: center;
+    border: #030303 solid 0.2em;
+    border-radius: 6em 6em;
+}
+
+.userPhoto {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    user-select: none;
+    transition: transform 2s;
+    cursor: pointer;
+}
+.userPhoto:hover {
+    transform: scale(1.05);
+
+}
+
+.button_follow, .button_unfollow {
+    text-align: center;
+    margin-top: 0.2em;
+    font-size: 1.01em;
+    background: #fa9797;
+    border: #030303 0.1em solid;
+    box-shadow:  -3px 4px rgba(33, 21, 45, 0.42);
+    border-radius: 5em 5em;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.3s;
+    position: relative;
+
+}
+
+.button_follow {
+    background: #adf5ad;
+}
+
+.button_follow:active {
+    transform: scale(0.96);
+}
+
+.button_unfollow:active {
+    transform: scale(0.96);
+}
+
+
+
+.user_Info_Container {
+    display: grid;
+    grid-template-rows: 3fr 3fr 8fr;
+    overflow: hidden;
+
+}
+
+.user_fullname {
+    font-size: 2em;
+    text-shadow: #FC0 1px 0 10px;
+    overflow: hidden;
+    cursor: pointer;
+}
+.user_fullname a{
+    text-decoration-line: none;
+}
+
+.user_fullname:hover{
+    text-decoration-line: underline;
+}
+
+.userPhotoSmall{
+    height: 1em;
+    margin-left: 0.2em;
+    border-radius: 2em 2em;
+
+
+}
+.user_status {
+    font-size: 1.1em;
+    font-style: italic;
+    padding-left: 0.4em;
+    overflow: hidden;
+
+
+}
+
+.friends_or_not {
+    color: #0f780f;
+    font-size: 1.5em;
+    height: 3em;
+}
+.friends_or_not img{
+    height: 3em;
+
+}
+
+.user_moreInfo {
+    position: relative;
+    display: grid;
+    grid-template-rows: 2.5fr 1fr;
+}
+
+.location {
+    text-align: center;
+    font-size: 1.1em;
+    font-style: italic;
+    color: rgba(3, 3, 3, 0.63);
+    position: absolute;
+    bottom: 0.3em;
+    right: 0.3em;
+}
+
+.search_form_wrapper{
+    background: wheat;
+    height: 3em;
+}
+
+
+

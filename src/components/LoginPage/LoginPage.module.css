@@ -1,0 +1,98 @@
+.wrapper_login_page{
+    height: 100%;
+    width: 100%;
+    background: rgba(252, 252, 252, 0);
+    display: flex;
+    justify-content: center;
+
+    padding-top: 1em;
+}
+
+.login_block{
+    background: rgba(148, 231, 148, 0.95);
+    width: 30em;
+    height: 45em;
+    text-align: center;
+    position: relative;
+
+}
+
+.closeImg{
+    height: 2.5em;
+    position: absolute;
+    top: .4em;
+    right: .4em;
+    transition: transform 0.4s;
+    cursor: pointer;
+    user-select: none;
+}
+.closeImg:hover{
+    transform: scale(1.1);
+}
+
+.inputs_wrapper{
+    height: 30em;
+    display: grid;
+    position: relative;
+    font-size: 1.3em;
+
+}
+.input_Error{
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    color: red;
+    font-style: italic;
+    font-size: 0.7em;
+}
+.input_value input{
+    width: 80%;
+    height: 2em;
+    margin-top: 0.5em;
+    font-size: 1.2rem;
+
+
+}
+.inputs_wrapper button{
+    font-size: 1.3rem;
+    position: absolute;
+    bottom: 0;
+    right: 0.2em;
+}
+.Error_Server{
+    font-size: 1.4em;
+    position: absolute;
+    bottom: -0.5em;
+    left: 1em;
+    color:red;
+}
+.checkbox{
+    text-align: left;
+    margin-left: 4em;
+    font-size: 1.05em;
+}
+.checkbox input{
+    height: 1.5em;
+    width: 1.5em;
+}
+.captcha_container{
+    margin:0 0 .5em .5em;
+    border-radius: 2em 2em;
+    color: #ef5252;
+    text-align: left;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.captcha_container img{
+    height: 3em;
+    margin-right: 1em;
+    border-radius: 1em 1em;
+
+
+}
+.captcha_container input{
+    height: 2em;
+    width: 8em;
+    font-size: 1em;
+}
