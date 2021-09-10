@@ -19,7 +19,7 @@ let Paginator:React.FC<PropsType>=({totalUsersCount, pageSize, currentPage, onPa
     }
 
 
-    let prevNextBtn = 5
+    let prevNextBtn = 4
     function PageChangedPrev (){
         if (currentPage<=prevNextBtn){
             prevNextBtn=1
