@@ -1,27 +1,16 @@
 
-.nav{
-    grid-area: nav;
-    background: linear-gradient(to top, rgba(40, 238, 20, 0.82), rgb(227, 243, 9));
-    font-size: 1.5em;
-    line-height: 3em;
-    user-select: none;
-
-}
-
-.Link_Container{
-    text-align: center;
-    transition: transform 0.5s;
 
 
-}.Link_Container:hover{
-     transform: scale(1.2);
- }
+
 .link{
-    color: black;
+    color: #fff2f2;
     text-decoration: none;
     text-shadow: #ff5df8 1px 0 10px;
+    font-size: 1.5em;
 }
 
-.link.active{
-    color: red
+.Menu{
+    padding-top: 4.2em;
+
 }
+

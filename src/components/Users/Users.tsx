@@ -1,26 +1,25 @@
-import mU from "./Users.module.css";
-import photoUserNull from "../../assets/images/photoUserNull.png";
-import React, {useEffect} from "react";
-import {NavLink} from "react-router-dom";
+import mU from "./Users.module.css"
+import photoUserNull from "../../assets/images/photoUserNull.png"
+import React, {useEffect} from "react"
+import {NavLink, useHistory} from "react-router-dom"
 import friendImg from "../../assets/images/friend.png"
-import Paginator from "./Paginator";
-import {UserType} from "../../types/types";
+import Paginator from "./Paginator"
 import UsersSearchForm from "./Users_Search"
-import {Filter, follow, requestUsers} from "../redux/Reducers/users-reducer";
-import {useDispatch, useSelector} from "react-redux";
+import {Filter, follow, requestUsers, unfollow} from "../redux/Reducers/users-reducer"
+import {useDispatch, useSelector} from "react-redux"
 import {
     getCurrentPage, getFollowingInProgress,
     getPageSize,
     getTotalUsersCount,
     getUsers,
     getUsersFilter
-} from "../redux/Selectors/User_Selector";
-import {getAuthorizedId, getIsAuth} from "../redux/Selectors/Auth_Selector";
+} from "../redux/Selectors/User_Selector"
+import {getAuthorizedId, getIsAuth} from "../redux/Selectors/Auth_Selector"
+import * as queryString from "querystring";
 
 
-type PropsType = {
-
-}
+type PropsType = {}
+type QueryParamsType = { term?: string, page?: string, friend?: string };
 
 
 export const Users: React.FC<PropsType> = React.memo(props => {
@@ -36,11 +35,33 @@ export const Users: React.FC<PropsType> = React.memo(props => {
 
 
         const dispatch = useDispatch()
+        const history = useHistory()
+
 
         useEffect(() => {
-            dispatch(requestUsers(1, pageSize, filter))
+            const parsed = queryString.parse(history.location.search.substr(1)) as QueryParamsType
+            let actualPage = currentPage
+            let actualFilter = filter
+            if (parsed.term) actualFilter = {...actualFilter, term: parsed.term as string}
+            if (parsed.page) actualPage = Number(parsed.page)
+            if (parsed.friend) actualFilter = {
+                ...actualFilter,
+                friend: parsed.friend === 'null' ? null : parsed.friend === 'true'
+            }
+            dispatch(requestUsers(actualPage, pageSize, actualFilter))
         }, [])
 
+        useEffect(() => {
+            const query :QueryParamsType = {}
+            if (filter.term) query.term = filter.term
+            if (filter.friend !== null) query.friend = String(filter.friend)
+            if (currentPage!==1) query.page = String(currentPage)
+            history.push({
+                pathname: '/users',
+                search: queryString.stringify(query)
+               // search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+            })
+        }, [filter, currentPage])
 
         const onPageChanged = (pageNumber: number) => {
             dispatch(requestUsers(pageNumber, pageSize, filter))
@@ -48,10 +69,10 @@ export const Users: React.FC<PropsType> = React.memo(props => {
         const onFilterChanged = (filter: Filter) => {
             dispatch(requestUsers(1, pageSize, filter))
         }
-        const follow = (userId: number) => {
+        const followUser = (userId: number) => {
             dispatch(follow(userId))
         }
-        const unfollow = (userId: number) => {
+        const unfollowUser = (userId: number) => {
             dispatch(unfollow(userId))
         }
 
@@ -87,14 +108,14 @@ export const Users: React.FC<PropsType> = React.memo(props => {
                                     ? <button className={mU.button_unfollow}
                                               disabled={followingInProgress.some(id => id === u.id) || u.id === authorizedId || !isAuth}
                                               onClick={() => {
-                                                  unfollow(u.id);
+                                                  unfollowUser(u.id);
                                               }}>
                                         Удалить из друзей
                                     </button>
                                     : <button className={mU.button_follow}
                                               disabled={followingInProgress.some(id => id === u.id) || u.id === authorizedId || !isAuth}
                                               onClick={() => {
-                                                  follow(u.id);
+                                                  followUser(u.id);
                                               }}>
                                         Добавить в друзья
                                     </button>

@@ -46,10 +46,7 @@ let ProfileInfo:React.FC<PropsType>=(props)=> {
     return (
 
         <div className={pI.ProfileInfoContainer}>
-            <div>
-                <img className={pI.imgScenery} alt="Forest"
-                     src="https://st2.depositphotos.com/1007283/7112/i/600/depositphotos_71120903-stock-photo-wide-panorama-landscape-in-bavaria.jpg"/>
-            </div>
+
 
 
             <div className={pI.userContainer}>

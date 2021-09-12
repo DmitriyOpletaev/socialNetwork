@@ -1,4 +1,4 @@
-import m from "./News.csss"
+import m from './News.module.css'
 
 
 function News() {
