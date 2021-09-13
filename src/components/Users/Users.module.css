@@ -103,16 +103,23 @@
     grid-template-columns: 1fr 1fr;
     grid-column-gap: 1em ;
 }
-@media (max-width: 991px) {
+@media (max-width: 900px) {
     .wrapper_of_Users{
         grid-template-columns:1fr;
 
     }
 
 }
-@media (min-width: 2000px) {
+@media (min-width: 1400px) {
     .wrapper_of_Users{
         grid-template-columns:1fr 1fr 1fr;
+
+    }
+
+}
+@media (min-width: 1800px) {
+    .wrapper_of_Users{
+        grid-template-columns:1fr 1fr 1fr 1fr;
 
     }
 
