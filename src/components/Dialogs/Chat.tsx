@@ -1,18 +1,16 @@
 import m from './Chat.module.css'
 import {Avatar, Button, Comment, Input, Tooltip} from 'antd';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState,} from "react";
 import {UserOutlined} from "@ant-design/icons";
 import moment from "moment";
 import {NavLink} from 'react-router-dom';
-import App from "../../App";
-import ProfileContainer from "../Profile/Profile_container";
 import {useDispatch, useSelector} from "react-redux";
-import {sendMessageChat, startMessagesListening} from "../redux/Reducers/Chat_reducer";
-import {getChat} from "../redux/Selectors/Chat_Selector";
+import {sendMessageChat, startMessagesListening, stopMessagesListening} from "../redux/Reducers/Chat_reducer";
+import {getChat, getStatusChat} from "../redux/Selectors/Chat_Selector";
 
 type Props = {}
 
-export type ChatMessage = {
+export type ChatMessageAPIType = {
     message: string,
     photo: string,
     userId: number,
@@ -25,37 +23,65 @@ export const Chat: React.FC<Props> = () => {
 
     const dispatch = useDispatch()
 
+    const status = useSelector(getStatusChat)
+
     useEffect(() => {
         dispatch(startMessagesListening())
+        console.log(status)
         return () => {
-            dispatch(startMessagesListening())
+            dispatch(stopMessagesListening())///startMessage...ILI  stopMess...
         }
-    },[])
+    }, [dispatch])
 
 
     return (
         <div className={m.Chat_Wrapper}>
-            <Messages />
-            <AddMessageForm />
+            {status === 'error' && <div style={{color:'red',fontSize:'3em'}}>ERROR ERROR ERROR !!!! REFRESH PAGE</div>}
+
+                    <Messages/>
+                    <AddMessageForm/>
+
+
         </div>
     )
 }
 
 
-const Messages: React.FC<{ }> = () => {
-
+const Messages = () => {
+    const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const messages = useSelector(getChat)
 
+    const [autoScroll, setAutoScroll] = useState(true)
+
+
+    useEffect(()=>{
+        if (autoScroll){
+            messagesAnchorRef.current?.scrollIntoView({behavior:'smooth'})
+        }
+
+    },[messages,autoScroll])
+
+    function scrollHandler(e:React.UIEvent<HTMLDivElement, UIEvent>){
+        let element = e.currentTarget
+        if(Math.abs(element.scrollHeight - element.scrollTop)- element.clientHeight<300){
+           !autoScroll&& setAutoScroll(true)
+
+        }else{
+            autoScroll && setAutoScroll(false)
+        }
+    }
+
+
     return (
-        <div className={m.Messages_Wrapper}>
-            {messages.map((m, index) => <Message key={index} message={m}/>)}
+        <div className={m.Messages_Wrapper} onScroll={scrollHandler}>
+            {messages.map((m) => <Message key={m.id} message={m}/>)}
+            <div ref={messagesAnchorRef}>___</div>
         </div>
     )
 }
 
 
-const Message: React.FC<{ message: ChatMessage }> = ({message}) => {
-
+const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(({message}) => {
 
     return (
         <Comment className={m.Comment_Container}
@@ -80,16 +106,15 @@ const Message: React.FC<{ message: ChatMessage }> = ({message}) => {
                  }
         />)
 
-}
+})
 
 
-const AddMessageForm: React.FC<{ }> = () => {
+const AddMessageForm = () => {
     const {TextArea} = Input;
     const [message, setMessage] = useState('')
-    const [isReadyWS, setReadyWS] = useState<'pending' | 'ready'>("pending")
+    const status = useSelector(getStatusChat)
 
     const dispatch = useDispatch()
-
 
 
     const sendMessage = () => {
@@ -104,7 +129,7 @@ const AddMessageForm: React.FC<{ }> = () => {
             <TextArea onChange={(e) => setMessage(e.currentTarget.value)}
                       value={message} className={m.textarea} rows={6}/>
             <span onClick={() => setMessage(smile)}>{smile}</span>
-            <Button onClick={sendMessage}
+            <Button onClick={sendMessage} disabled={status !== 'ready'}
                     className={m.button_send} type="primary" size={"large"}>
                 Send
             </Button>
