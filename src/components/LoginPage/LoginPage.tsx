@@ -6,7 +6,7 @@ import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getCaptchaUrl, getIsAuth} from "../redux/Selectors/Auth_Selector";
 import {logInMe} from "../redux/Reducers/auth_reducer";
-import {Redirect} from "react-router-dom";
+import {Redirect, useHistory} from "react-router-dom";
 
 
 
@@ -156,8 +156,10 @@ const LoginForm:React.FC<Props>=({logInMeSubmit, captchaUrl})=> {
     )
 }
 
+type PropsHOC={
 
-const LoginPage=()=> {
+}
+const LoginPage:React.FC<PropsHOC>=()=> {
 
    /* let eMail = 'OpletaevDmitriy@gmail.com'
     let password = '_!2zFsnhet5mM7T'*/
@@ -172,8 +174,9 @@ const LoginPage=()=> {
     }
 
 
+
     if (isAuth) {
-        return <Redirect to={"/profile"}/>
+        return <Redirect to={'/profile'}/>
     }
     return (
 

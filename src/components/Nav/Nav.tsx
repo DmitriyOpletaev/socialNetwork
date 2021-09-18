@@ -1,7 +1,8 @@
 import n from './Nav.module.css';
 import {NavLink, useHistory} from "react-router-dom";
 import {Menu} from "antd";
-import {MoneyCollectOutlined, UserOutlined,HddOutlined, TeamOutlined, MessageOutlined,CameraOutlined,CustomerServiceOutlined, PartitionOutlined} from "@ant-design/icons";
+import {MoneyCollectOutlined,PieChartOutlined, UserOutlined,HddOutlined, TeamOutlined, MessageOutlined,CameraOutlined,
+    CustomerServiceOutlined, PartitionOutlined,VideoCameraOutlined} from "@ant-design/icons";
 import React from "react";
 import './Nav.module.css';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -62,6 +63,11 @@ function Nav() {
                         Photos
                     </NavLink>
                 </Menu.Item>
+                <Menu.Item key="videos" icon={<VideoCameraOutlined />}>
+                    <NavLink to="/videos">
+                        Videos
+                    </NavLink>
+                </Menu.Item>
                 <Menu.Item key="users" icon={<TeamOutlined/>}>
                     <NavLink to="/users">
                         Users
@@ -107,7 +113,11 @@ function Nav() {
                     </Menu.Item>
 
                 </SubMenu>
-
+                <Menu.Item icon={<PieChartOutlined/>}>
+                    <NavLink to='/praktika/'>
+                        praktika
+                    </NavLink>
+                </Menu.Item>
 
             </Menu>
         </>

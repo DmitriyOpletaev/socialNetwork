@@ -1,4 +1,4 @@
-import './App.css'
+import m from './App.module.css'
 import React, {Component, Suspense,} from "react"
 import {BrowserRouter, Route, Switch, withRouter,} from "react-router-dom"
 import {connect, Provider} from "react-redux"
@@ -8,19 +8,21 @@ import Preloader from "./components/common/preloader/preloader"
 import {compose} from "redux"
 import store, {AppStateType} from "./components/redux/redux-store"
 import 'antd/dist/antd.css';
-import { Layout } from 'antd';
+import {Alert, Layout, Spin} from 'antd';
 import {UsersPage} from "./components/Users/UsersContainer";
 import Groups from "./components/Groups/Groups";
 import News from "./components/News/News";
-import Music from "./components/Music/Music";
+//import Music from "./components/Music/Music";
 import Homepage from "./components/Homepage/Homepage";
 import Nav from "./components/Nav/Nav";
 import {MyHeader} from "./components/Header/Header";
 import {PhotosPage} from "./components/Photos/PhotosPage";
-
+import {PraktikaPage} from "./components/praktika/praktika";
+import ChatPage from "./components/Dialogs/ChatPage";
+import {VideoPage} from "./components/Video/Video";
 const ProfileContainer = React.lazy(() => import("./components/Profile/Profile_container"))
 const LoginPage = React.lazy(() => import("./components/LoginPage/LoginPage"))
-const ChatPage = React.lazy(() => import("./components/Dialogs/ChatPage"))
+
 
 
 type MapProps = ReturnType<typeof mapStateToProps>
@@ -29,6 +31,22 @@ type DispatchProps = {
 }
 
 const { Sider, Content } = Layout;
+
+
+function Loading (){
+    return(
+
+    <Spin size='large' tip="Loading...">
+        <Alert
+            message="Alert message title"
+            description="Further details about the context of this alert."
+            type="info"
+        />
+    </Spin>
+    )
+}
+
+
 
 class App extends Component<MapProps & DispatchProps> {
 
@@ -40,16 +58,25 @@ class App extends Component<MapProps & DispatchProps> {
 
     componentDidMount() {
         this.props.initializeApp();
+        // eslint-disable-next-line no-restricted-globals
+        if(innerWidth>1000){  ///хуйня
+            this.setState({
+                collapsed: !this.state.collapsed,
+            });
+        }
         // window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors) //слушатель ошибки
     }
+
 
     componentWillUnmount() {
         // window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)  //подчищаем мусор =)
     }
 
+
     state = {
         collapsed: true,
     };
+
 
     toggle = () => {
         this.setState({
@@ -66,38 +93,35 @@ class App extends Component<MapProps & DispatchProps> {
             return (<Preloader/>)
         }
         return (
-            <Layout>
+            <Layout className={m.body}>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <Nav/>
                 </Sider>
-                <Layout className="site-layout">
-                    <MyHeader collapsed={this.state.collapsed} toggle={this.toggle}/>
+                <Layout className={m.wrapper_header_content}>
+                    <MyHeader  collapsed={this.state.collapsed} toggle={this.toggle}/>
 
-                    <Content
-                        className="site-layout-background"
-                        style={{
-                            margin: '10px 10px',
-                            padding: 18,
-                            minHeight: '88vh',
-                        }}
-                    >
-                        <Suspense fallback={<div>Wait a minute</div>}>
+                    <Content className={m.body_content}>
+                        <Suspense fallback={<Loading/>}>
                             <Switch>
                                 <Route exact path='/homepage' render={() => <Homepage/>}/>
                                 <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
                                 <Route path='/photos' render={() => <PhotosPage/>}/>
+                                <Route path='/videos' render={() => <VideoPage/>}/>
                                 <Route path='/users' render={() => <UsersPage />}/>
                                 <Route path='/chat' render={() => <ChatPage />}/>
                                 <Route path='/login/facebook' render={() => <div>Facebook</div>}/>
-                                <Route path='/login' render={() => <LoginPage/>}/>
+                                <Route path='/login' render={() => <LoginPage />}/>
                                 <Route path='/groups' render={() => <Groups/>}/>
                                 <Route path='/news' render={() => <News/>}/>
-                                <Route path='/music' render={() => <Music/>}/>
+                                <Route path='/praktika/' render={() => <PraktikaPage/>}/>
                                 <Route path='*' render={() => <div className='imgError'>ERROR</div> } />
                             </Switch>
                         </Suspense>
                     </Content>
                 </Layout>
+                <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
+                   Реклама
+                </Sider>
             </Layout>
 
         );

@@ -58,3 +58,14 @@
         width: 90%;
     }
 }
+.smile_picker{
+    position: absolute;
+    top: -23em;
+    right: 0;
+}
+.Smile{
+    font-size: 1.8em;
+    position: absolute;
+    top:0.2em;
+    right: 0.3em;
+}

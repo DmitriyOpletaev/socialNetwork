@@ -5,6 +5,7 @@ import React from "react";
 import Preloader from "../common/preloader/preloader";
 import {Redirect} from "react-router-dom";
 import {ProfileType} from "../../types/types";
+import { Spin, Alert } from 'antd';
 
 
 type PropsType = {
@@ -20,7 +21,13 @@ type PropsType = {
 let Profile: React.FC<PropsType> = (props) => {
 
     if (props.profile == null) {
-        return <Preloader/>
+        return <Spin size='large' tip="Loading...">
+            <Alert
+                message="Alert message title"
+                description="Further details about the context of this alert."
+                type="info"
+            />
+        </Spin>
     }
     if (!props.authorizedUserId && !props.match.params.userId) {
         return <Redirect to={'/login'}/>

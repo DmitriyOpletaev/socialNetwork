@@ -1,0 +1,18 @@
+.selectedUser{
+    margin-top: 1em;
+    background: rgba(123, 189, 111, 0.65);
+    color: #000066;
+    cursor: pointer;
+    user-select: none;
+    width: 20em;
+    border: black solid 1px;
+    font-size: 1.3em;
+}
+.noSelectedUSer{
+    margin-top: 1em;
+    border: black solid 1px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1.3em;
+    width: 20em;
+}

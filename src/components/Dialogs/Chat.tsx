@@ -7,6 +7,8 @@ import {NavLink} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {sendMessageChat, startMessagesListening, stopMessagesListening} from "../redux/Reducers/Chat_reducer";
 import {getChat, getStatusChat} from "../redux/Selectors/Chat_Selector";
+import { SmileTwoTone } from '@ant-design/icons';
+import Picker, {IEmojiData, SKIN_TONE_MEDIUM_DARK, SKIN_TONE_NEUTRAL} from "emoji-picker-react";
 
 type Props = {}
 
@@ -19,7 +21,7 @@ export type ChatMessageAPIType = {
 
 
 export const Chat: React.FC<Props> = () => {
-
+    console.log('Pererisovka ----- Chat')
 
     const dispatch = useDispatch()
 
@@ -27,7 +29,6 @@ export const Chat: React.FC<Props> = () => {
 
     useEffect(() => {
         dispatch(startMessagesListening())
-        console.log(status)
         return () => {
             dispatch(stopMessagesListening())///startMessage...ILI  stopMess...
         }
@@ -48,6 +49,7 @@ export const Chat: React.FC<Props> = () => {
 
 
 const Messages = () => {
+    console.log('Pererisovka ----- messageSSS')
     const messagesAnchorRef = useRef<HTMLDivElement>(null)
     const messages = useSelector(getChat)
 
@@ -82,7 +84,7 @@ const Messages = () => {
 
 
 const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(({message}) => {
-
+    console.log('Pererisovka ----- message(1)')
     return (
         <Comment className={m.Comment_Container}
                  author={<NavLink to={'/profile/' + message.userId} className={m.author}>{message.userName}</NavLink>}
@@ -112,10 +114,16 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(({message}
 const AddMessageForm = () => {
     const {TextArea} = Input;
     const [message, setMessage] = useState('')
+    const [isPickerOpen, setPickerOpen] = useState(false)
     const status = useSelector(getStatusChat)
 
     const dispatch = useDispatch()
 
+
+
+    const emojiChoose = (e: React.MouseEvent, emojiObject:IEmojiData)=>{
+        setMessage(valueInput=>valueInput+emojiObject.emoji)
+    }
 
     const sendMessage = () => {
         if (!message) return
@@ -123,12 +131,17 @@ const AddMessageForm = () => {
         setMessage('')
 
     }
-    let smile = '\u{1F4A9}'
+
     return (
         <div className={m.AddMessageForm_Wrapper}>
             <TextArea onChange={(e) => setMessage(e.currentTarget.value)}
+                      onPressEnter={sendMessage}
                       value={message} className={m.textarea} rows={6}/>
-            <span onClick={() => setMessage(smile)}>{smile}</span>
+            <SmileTwoTone onClick={()=>setPickerOpen(!isPickerOpen)} className={m.Smile} />
+            <div className={m.smile_picker} >
+                {isPickerOpen && <Picker  disableSearchBar onEmojiClick={emojiChoose} skinTone={SKIN_TONE_NEUTRAL}/>}
+
+            </div>
             <Button onClick={sendMessage} disabled={status !== 'ready'}
                     className={m.button_send} type="primary" size={"large"}>
                 Send

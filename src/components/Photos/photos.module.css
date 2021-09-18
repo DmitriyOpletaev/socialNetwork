@@ -1,30 +1,27 @@
 .wrapper{
     padding: 2em 4em;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-column-gap: 1em;
     grid-row-gap: 1em;
     width: 100%;
 }
 
 .photos{
-    border: black solid 1px;
     overflow: hidden;
-
+    position: relative;
+    display: flex;
 }
-.photos img{
+
+.foto{
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center center;
-    filter: grayscale(1);
-    transition: 1s filter, 1s transform ;
     cursor: pointer;
 }
-.photos img:hover{
-    filter: grayscale(0);
-    transform: scale(1.15);
-}
+
+
 @media (max-width: 1200px) {
     .wrapper{
         grid-template-columns: 1fr 1fr 1fr ;
