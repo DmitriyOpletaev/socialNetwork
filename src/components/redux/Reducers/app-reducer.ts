@@ -35,7 +35,7 @@ const actions = {
 export const initializeApp = (): ThunkAction<Promise<void>, AppStateType, unknown, ActionsType> =>
     async (dispatch) => {
         await dispatch(getAuthUserData())
-        await dispatch(actions.initializedSuccess())
+         dispatch(actions.initializedSuccess())
     }
 
 

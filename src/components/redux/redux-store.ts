@@ -7,7 +7,9 @@ import authReducer from "./Reducers/auth_reducer";
 import thunkMiddleware, {ThunkAction} from "redux-thunk";
 import appReducer from "./Reducers/app-reducer";
 import chatReducer from "./Reducers/Chat_reducer";
-
+import videosReducer from "./Reducers/Videos_Reducer"
+import {newsReducer} from "./Reducers/News_Reducer";
+import {musicReducer} from "./Reducers/Music_Reducer";
 
 
 let rootReducer = combineReducers({
@@ -18,6 +20,9 @@ let rootReducer = combineReducers({
     auth: authReducer,
     app: appReducer,
     chat: chatReducer,
+    video: videosReducer,
+    news: newsReducer,
+    music: musicReducer
 
 });
 

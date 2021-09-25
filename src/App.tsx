@@ -3,7 +3,6 @@ import React, {Component, Suspense,} from "react"
 import {BrowserRouter, Route, Switch, withRouter,} from "react-router-dom"
 import {connect, Provider} from "react-redux"
 import {initializeApp} from "./components/redux/Reducers/app-reducer"
-
 import Preloader from "./components/common/preloader/preloader"
 import {compose} from "redux"
 import store, {AppStateType} from "./components/redux/redux-store"
@@ -12,7 +11,6 @@ import {Alert, Layout, Spin} from 'antd';
 import {UsersPage} from "./components/Users/UsersContainer";
 import Groups from "./components/Groups/Groups";
 import News from "./components/News/News";
-//import Music from "./components/Music/Music";
 import Homepage from "./components/Homepage/Homepage";
 import Nav from "./components/Nav/Nav";
 import {MyHeader} from "./components/Header/Header";
@@ -20,7 +18,8 @@ import {PhotosPage} from "./components/Photos/PhotosPage";
 import {PraktikaPage} from "./components/praktika/praktika";
 import ChatPage from "./components/Dialogs/ChatPage";
 import {VideoPage} from "./components/Video/Video";
-const ProfileContainer = React.lazy(() => import("./components/Profile/Profile_container"))
+import {Profile} from "./components/ProfileNew/Profile";
+import {MusicPage} from "./components/Music/Music_Page";
 const LoginPage = React.lazy(() => import("./components/LoginPage/LoginPage"))
 
 
@@ -59,11 +58,7 @@ class App extends Component<MapProps & DispatchProps> {
     componentDidMount() {
         this.props.initializeApp();
         // eslint-disable-next-line no-restricted-globals
-        if(innerWidth>1000){  ///хуйня
-            this.setState({
-                collapsed: !this.state.collapsed,
-            });
-        }
+
         // window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors) //слушатель ошибки
     }
 
@@ -93,7 +88,56 @@ class App extends Component<MapProps & DispatchProps> {
             return (<Preloader/>)
         }
         return (
-            <Layout className={m.body}>
+            <Layout>
+                <Sider collapsed={this.state.collapsed}
+                    style={{
+                        overflow: 'auto',
+                        height: '100vh',
+                        position: 'fixed',
+                        left: 0,
+                    }}
+                >
+                    <div className="logo" >LOGO</div>
+                    <Nav/>
+                </Sider>
+                <Layout className="site-layout" style={{ marginLeft: 200, minHeight:'100vh' }}>
+
+                        <MyHeader  collapsed={this.state.collapsed} toggle={this.toggle}/>
+
+                    <Content style={{ margin: '24px 16px 0', overflow: 'initial' }}>
+                        <div className="site-layout-background" style={{ padding: 24, textAlign: 'center' }}>
+                            <Suspense fallback={<Loading/>}>
+                                <Switch>
+                                    <Route exact path='/homepage' render={() => <Homepage/>}/>
+                                    <Route path='/profile/:userId?' render={() => <Profile/>}/>
+                                    <Route path='/photos' render={() => <PhotosPage/>}/>
+                                    <Route path='/videos' render={() => <VideoPage/>}/>
+                                    <Route path='/users' render={() => <UsersPage />}/>
+                                    <Route path='/chat' render={() => <ChatPage />}/>
+                                    <Route path='/music' render={() => <MusicPage />}/>
+                                    <Route path='/login/facebook' render={() => <div>Facebook</div>}/>
+                                    <Route path='/login' render={() => <LoginPage />}/>
+                                    <Route path='/groups' render={() => <Groups/>}/>
+                                    <Route path='/news' render={() => <News/>}/>
+                                    <Route path='/praktika/' render={() => <PraktikaPage/>}/>
+                                    <Route path='*' render={() => <div className='imgError'>ERROR</div> } />
+                                </Switch>
+                            </Suspense>
+                        </div>
+                    </Content>
+
+                </Layout>
+            </Layout>
+
+
+
+
+
+
+
+
+
+           /* <Layout className={m.body}>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <Nav/>
                 </Sider>
@@ -122,7 +166,7 @@ class App extends Component<MapProps & DispatchProps> {
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                    Реклама
                 </Sider>
-            </Layout>
+            </Layout>*/
 
         );
 

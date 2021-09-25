@@ -42,6 +42,7 @@ function Nav() {
                             </NavLink>
                         </Menu.Item>
 
+
                         <Menu.Item key="1.2" icon={<UserOutlined/>}>
                             Setting
                         </Menu.Item>

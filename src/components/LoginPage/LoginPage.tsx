@@ -62,7 +62,7 @@ const LoginForm:React.FC<Props>=({logInMeSubmit, captchaUrl})=> {
 
                     <div>
                         <div className={m.input_value}>
-                            <label htmlFor='{`name`}'>введите имя</label>
+                            <label htmlFor={`name`}>введите имя</label>
                             <Field type={`text`} name={`name`} onChange={handleChange}
                                    onBlur={handleBlur} value={values.name}
 
@@ -74,7 +74,7 @@ const LoginForm:React.FC<Props>=({logInMeSubmit, captchaUrl})=> {
 
                     <div>
                         <div className={m.input_value}>
-                            <label htmlFor='{`login`}'>введите логин</label>
+                            <label htmlFor={`login`}>введите логин</label>
                             <input type={`text`} name={`login`} onChange={handleChange}
                                    onBlur={handleBlur} value={values.login}
                             />

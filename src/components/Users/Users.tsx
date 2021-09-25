@@ -75,8 +75,7 @@ export const Users: React.FC<PropsType> = React.memo(props => {
         const unfollowUser = (userId: number) => {
             dispatch(unfollow(userId))
         }
-
-
+    console.log(users)
         return <div className={mU.wrapper}>
             <div className={mU.mainTitle}>
                 <a className={mU.usersTitleGeneral} href='https://www.google.com.ua/?hl=ru'>Users</a>

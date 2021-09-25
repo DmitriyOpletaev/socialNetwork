@@ -97,7 +97,7 @@ const Message: React.FC<{ message: ChatMessageAPIType }> = React.memo(({message}
                          <Avatar icon={<UserOutlined/>}/>
                  }
                  content={
-                     <p>
+                     <p style={{textAlign:'left'}}>
                          {message.message}
                      </p>
                  }

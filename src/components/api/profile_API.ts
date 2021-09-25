@@ -17,6 +17,11 @@ export const profileAPI = {
     updateStatus(status: string) {
         return instance.put<Response>(`profile/status/`, {status: status}).then(res => res.data)   //если повторяется можно написать просто {status} вместо {status:status}
     },
+    updateUserDetails(userDetails: any) {
+        debugger
+        return instance.put<Response>(`profile/`, userDetails).then(res => res.data)   //если повторяется можно написать просто {status} вместо {status:status}
+
+    },
     savePhoto(photoFile: any) {
         let formData = new FormData();
         formData.append("image", photoFile)
