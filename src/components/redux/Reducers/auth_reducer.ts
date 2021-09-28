@@ -44,7 +44,9 @@ const actions = {
 
 
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
+
     let meData = await authAPI.authMe()
+
     if (meData.resultCode === ResultCodeEnum.Success) {
         let {id, login, email} = meData.data;      //порядок id, login, email - ВАЖЕН!!!! // data из API и data из Redux//
         dispatch(actions.setAuthUserData(id, login, email, true))

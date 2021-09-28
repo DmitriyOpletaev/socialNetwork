@@ -10,6 +10,7 @@ import chatReducer from "./Reducers/Chat_reducer";
 import videosReducer from "./Reducers/Videos_Reducer"
 import {newsReducer} from "./Reducers/News_Reducer";
 import {musicReducer} from "./Reducers/Music_Reducer";
+import themeReducer from "./Reducers/theme-reducer";
 
 
 let rootReducer = combineReducers({
@@ -22,7 +23,8 @@ let rootReducer = combineReducers({
     chat: chatReducer,
     video: videosReducer,
     news: newsReducer,
-    music: musicReducer
+    music: musicReducer,
+   theme: themeReducer
 
 });
 

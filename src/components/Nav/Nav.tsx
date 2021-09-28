@@ -1,6 +1,6 @@
 import n from './Nav.module.css';
 import {NavLink, useHistory} from "react-router-dom";
-import {Menu} from "antd";
+import {Menu, Switch} from "antd";
 import {MoneyCollectOutlined,PieChartOutlined, UserOutlined,HddOutlined, TeamOutlined, MessageOutlined,CameraOutlined,
     CustomerServiceOutlined, PartitionOutlined,VideoCameraOutlined} from "@ant-design/icons";
 import React from "react";
@@ -9,14 +9,14 @@ import SubMenu from 'antd/lib/menu/SubMenu';
 import {useDispatch, useSelector} from "react-redux";
 import {logOutMe} from "../redux/Reducers/auth_reducer";
 import {getIsAuth, getOwnLogin} from "../redux/Selectors/Auth_Selector";
+import {getThemeMode} from "../redux/Reducers/theme-reducer";
 
 
 
 function Nav() {
-
     const isAuth = useSelector(getIsAuth)
     const login = useSelector(getOwnLogin)
-
+    const theme = useSelector(getThemeMode)
 
     const dispatch = useDispatch()
     const quit = () => {
@@ -26,11 +26,13 @@ function Nav() {
     let keyFromHistory = history.location.pathname.substr(1)
 
 
+
     return (
 
         <>
-
-            <Menu theme="dark" mode="inline" /*defaultOpenKeys={['1']}*/ defaultSelectedKeys={[keyFromHistory]}
+            <Switch checkedChildren="开启" unCheckedChildren="关闭" defaultChecked />
+            <br />
+            <Menu theme={theme} mode="inline" /*defaultOpenKeys={['1']}*/ defaultSelectedKeys={[keyFromHistory]}
                   className={n.Menu}>
 
                 {isAuth ?
@@ -69,6 +71,7 @@ function Nav() {
                         Videos
                     </NavLink>
                 </Menu.Item>
+
                 <Menu.Item key="users" icon={<TeamOutlined/>}>
                     <NavLink to="/users">
                         Users
