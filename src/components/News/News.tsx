@@ -7,9 +7,11 @@ import {getIsLoadingNews, getNews, getNewsErrors} from "../redux/Selectors/News_
 import {RightCircleTwoTone,CloseCircleFilled,ExclamationCircleOutlined} from '@ant-design/icons';
 import {Field, Form, Formik, FormikValues} from "formik";
 import {useEffect, useState} from "react";
+import {getThemeMode} from "../redux/Reducers/theme-reducer";
 
 
 const News = () => {
+    const theme = useSelector(getThemeMode)
     const news = useSelector(getNews)
     const errors = useSelector(getNewsErrors)
 
@@ -19,9 +21,6 @@ const News = () => {
             description: <span style={{fontSize:'1.2em',fontWeight:'bold'}}>{description}</span>,
             placement: 'bottomRight',
             icon:<span style={{color:'red', fontSize:'1.4em'}}><ExclamationCircleOutlined /></span>,
-
-
-
         });
     };
     useEffect(() => {
@@ -29,7 +28,7 @@ const News = () => {
     }, [errors])
 
     let resultBlockNews = news.map(d => (<>
-            <div className={m.search_result_block}>
+            <div className={`${m.search_result_block} ${theme==='dark' && m.dark_search_result_block}`}>
                 <div className={m.title}><a href={d.url}>{d.title}</a></div>
                 <div className={m.content}>
                     <div className={m.text}>
@@ -70,6 +69,7 @@ const News = () => {
 
 const SearchBarNews = () => {
     const dispatch = useDispatch()
+    const theme = useSelector(getThemeMode)
     const isLoading = useSelector(getIsLoadingNews)
     const [topic, selectTopic] = useState('breaking-news')
 
@@ -101,7 +101,6 @@ const SearchBarNews = () => {
     return (
         <>
             <div className={m.topic_news}>
-
                 {ButtonsTopic}
             </div>
 
@@ -134,7 +133,7 @@ const SearchBarNews = () => {
 
 
                         </div>
-                        <div className={m.details_search_container}>
+                        <div className={`${m.details_search_container} ${theme==='dark'&&m.details_search_container_dark_mode}`}>
                             <div>
                                 <label htmlFor={'lang'}>Язык</label>
                                 <Field as={'select'} name={'lang'}>

@@ -1,8 +1,8 @@
 import m from './App.module.scss'
-import React, {Component, Suspense,} from "react"
+import React, {Component, Suspense, useEffect,} from "react"
 import {BrowserRouter, Route, Switch, withRouter,} from "react-router-dom"
-import {connect, Provider} from "react-redux"
-import {initializeApp} from "./components/redux/Reducers/app-reducer"
+import {connect, Provider, useDispatch, useSelector} from "react-redux"
+import {getInitialized, initializeApp} from "./components/redux/Reducers/app-reducer"
 import Preloader from "./components/common/preloader/preloader"
 import {compose} from "redux"
 import store, {AppStateType} from "./components/redux/redux-store"
@@ -19,16 +19,12 @@ import {PraktikaPage} from "./components/praktika/praktika";
 import ChatPage from "./components/Dialogs/ChatPage";
 import {VideoPage} from "./components/Video/Video";
 import {Profile} from "./components/ProfileNew/Profile";
-import {MusicPage} from "./components/Music/Music_Page";
-import {Header} from "antd/es/layout/layout";
-
+import {getThemeMode} from "./components/redux/Reducers/theme-reducer";
+import {AudioPlayer} from "./components/Video/Audio_Player/AudioPlayer";
 const LoginPage = React.lazy(() => import("./components/LoginPage/LoginPage"))
+const MusicPage = React.lazy(() => import("./components/Music/Music_Page"))
 
 
-type MapProps = ReturnType<typeof mapStateToProps>
-type DispatchProps = {
-    initializeApp: () => void
-}
 
 const {Sider, Content} = Layout;
 
@@ -47,67 +43,45 @@ function Loading() {
 }
 
 
-class App extends Component<MapProps & DispatchProps> {
+const App = () => {
+    const dispatch = useDispatch()
+    const initialized = useSelector(getInitialized)
+    const theme = useSelector(getThemeMode)
+    useEffect(() => {
+        dispatch(initializeApp())
+    }, [])
 
-    /*catchAllUnhandledErrors = (e:PromiseRejectionEvent)=>{
-        alert('some error')
-       // console.log(promiseRejectionEvent)
-    }*/
 
 
-    componentDidMount() {
-        this.props.initializeApp();
-        // eslint-disable-next-line no-restricted-globals
 
-        // window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors) //слушатель ошибки
+    if (!initialized) {
+        return (<Preloader/>)
     }
+    return (
+        <Layout>
+            <AudioPlayer/>
+            <Sider theme={theme} className={m.slider_menu}
+                   style={{
+                       overflow: 'auto',
+                       height: '94vh',
+                       position: 'fixed',
+                       left: 0,
+                       top:'6vh'
+                   }}
+            >
+
+                <Nav/>
+
+            </Sider>
+            <Layout className={m.header_content_wrapper} >
+                <div className={theme==='dark'?m.header_wrapper_dark:m.header_wrapper_light} >
+                    <MyHeader/>
+                </div>
 
 
-    componentWillUnmount() {
-        // window.addEventListener('unhandledrejection', this.catchAllUnhandledErrors)  //подчищаем мусор =) remove наверное должно быть
-    }
-
-
-    state = {
-        collapsed: true,
-    };
-
-
-    toggle = () => {
-        this.setState({
-            collapsed: !this.state.collapsed,
-        });
-    };
-
-
-    render() {
-
-        if (!this.props.initialized) {
-            return (<Preloader/>)
-        }
-        return (
-            <Layout>
-                <Sider theme='light' className={m.slider_menu}
-                    style={{
-                        overflow: 'auto',
-                        height: '100vh',
-                        position: 'fixed',
-                        left: 0,
-                    }}
-                >
-
-                    <Nav/>
-                </Sider>
-                <Layout className={m.header_content_wrapper} >
-                    <Header className={m.header_wrapper}>
-                        <MyHeader />
-                    </Header>
-
-
-
-                    <div className={m.content_wrapper}>
+                <div>
                     <Content>
-                        <div className="site-layout-background" style={{padding: 24, textAlign: 'center'}}>
+                        <div className={theme==='dark' ? m.content_wrapper_dark_mode : m.content_wrapper_light_mode}>
                             <Suspense fallback={<Loading/>}>
                                 <Switch>
                                     <Route exact path='/homepage' render={() => <Homepage/>}/>
@@ -128,11 +102,11 @@ class App extends Component<MapProps & DispatchProps> {
                         </div>
                     </Content>
                 </div>
-                </Layout>
             </Layout>
-        );
+        </Layout>
+    );
 
-    }
+
 }
 
 function mapStateToProps(state: AppStateType) {

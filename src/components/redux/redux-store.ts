@@ -11,6 +11,9 @@ import videosReducer from "./Reducers/Videos_Reducer"
 import {newsReducer} from "./Reducers/News_Reducer";
 import {musicReducer} from "./Reducers/Music_Reducer";
 import themeReducer from "./Reducers/theme-reducer";
+import {mySongsReducer} from "./Reducers/MySongs_Reducer";
+import {audioPlayer} from "./Reducers/Audio_Player_Reducer";
+import googleAuthReducer from "./Reducers/Google_Auth-Reducer";
 
 
 let rootReducer = combineReducers({
@@ -24,7 +27,10 @@ let rootReducer = combineReducers({
     video: videosReducer,
     news: newsReducer,
     music: musicReducer,
-   theme: themeReducer
+   theme: themeReducer,
+    mySongs: mySongsReducer,
+    audioPlayer:audioPlayer,
+    googleAuth: googleAuthReducer
 
 });
 

@@ -9,6 +9,7 @@ type ThunkType = BaseThunkType<Actions>
 export type SongType = {
     id: number
     title_short: string
+    title:string
     link: string
     preview: string
     artist: Artist

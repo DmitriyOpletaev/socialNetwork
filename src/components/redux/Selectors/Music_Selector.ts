@@ -1,7 +1,7 @@
 import {AppStateType} from "../redux-store";
 
 
-   export function getPlaylist(state:AppStateType) {
+   export function getSearchPlaylist(state:AppStateType) {
        return state.music.playlist
    }
    export function getIsLoading(state:AppStateType) {

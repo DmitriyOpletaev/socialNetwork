@@ -6,6 +6,9 @@ import {AppStateType, InferActionsTypes} from "../redux-store";
 let initialState = {
     initialized: false,     //идет проверка авторизован ли пользователь
 }
+export function getInitialized(state:AppStateType){
+    return state.app.initialized
+}
 type InitialStateType = typeof initialState
 const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
 

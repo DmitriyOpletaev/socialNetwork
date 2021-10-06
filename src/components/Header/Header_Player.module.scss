@@ -1,0 +1,56 @@
+.player_wrapper {
+    .controls_button_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .volume_slider {
+            width: 20%;
+
+            &.muted {
+                opacity: 0.5;
+            }
+        }
+    }
+
+    .songNameContainer {
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+        font-size: 0.7em;
+        display: flex;
+    }
+
+}
+
+.songsList_buttons_wrapper {
+    margin-top: 0.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2em;
+
+    .songsList_container {
+        padding: 0.3em 0 0 0.3em;
+        width: 100%;
+        border: black 1px solid;
+        background: white;
+       height: 50vh;
+        overflow: auto;
+        .tab_content_wrapper {
+            display: flex;
+            justify-content: center;
+            .song{
+                width: 100%;
+                margin-bottom: 0.5em;
+                border: black 0.5px inset;
+                cursor: pointer;
+                user-select: none;
+                text-align: center;
+            }
+
+        }
+    }
+
+
+}

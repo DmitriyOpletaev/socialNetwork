@@ -1,0 +1,26 @@
+.header_wrapper{
+    padding: 0 2em 0 1em;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5em;
+    color: black;
+    position: relative;
+    a{
+        color: black;
+    }
+    &.header_wrapper_dark_mode{
+        color: white;
+        a{
+            color: white;
+        }
+     }
+    .player_container{
+        width: 17%;
+        height: 3em;
+    }
+}
+.switch_theme{
+    width: 6em;
+}

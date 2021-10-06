@@ -1,8 +1,10 @@
 import n from './Nav.module.css';
 import {NavLink, useHistory} from "react-router-dom";
-import {Menu, Switch} from "antd";
-import {MoneyCollectOutlined,PieChartOutlined, UserOutlined,HddOutlined, TeamOutlined, MessageOutlined,CameraOutlined,
-    CustomerServiceOutlined, PartitionOutlined,VideoCameraOutlined} from "@ant-design/icons";
+import {Menu} from "antd";
+import {
+    MoneyCollectOutlined, PieChartOutlined, UserOutlined, HddOutlined, TeamOutlined, MessageOutlined, CameraOutlined,
+    CustomerServiceOutlined, PartitionOutlined, VideoCameraOutlined
+} from "@ant-design/icons";
 import React from "react";
 import './Nav.module.css';
 import SubMenu from 'antd/lib/menu/SubMenu';
@@ -10,7 +12,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {logOutMe} from "../redux/Reducers/auth_reducer";
 import {getIsAuth, getOwnLogin} from "../redux/Selectors/Auth_Selector";
 import {getThemeMode} from "../redux/Reducers/theme-reducer";
-
 
 
 function Nav() {
@@ -26,12 +27,9 @@ function Nav() {
     let keyFromHistory = history.location.pathname.substr(1)
 
 
-
     return (
 
         <>
-            <Switch checkedChildren="开启" unCheckedChildren="关闭" defaultChecked />
-            <br />
             <Menu theme={theme} mode="inline" /*defaultOpenKeys={['1']}*/ defaultSelectedKeys={[keyFromHistory]}
                   className={n.Menu}>
 
@@ -66,7 +64,7 @@ function Nav() {
                         Photos
                     </NavLink>
                 </Menu.Item>
-                <Menu.Item key="videos" icon={<VideoCameraOutlined />}>
+                <Menu.Item key="videos" icon={<VideoCameraOutlined/>}>
                     <NavLink to="/videos">
                         Videos
                     </NavLink>
@@ -82,17 +80,17 @@ function Nav() {
                         Chat
                     </NavLink>
                 </Menu.Item>
-                <Menu.Item key="groups" icon={<MoneyCollectOutlined />}>
+                <Menu.Item key="groups" icon={<MoneyCollectOutlined/>}>
                     <NavLink to="/groups">
                         Groups
                     </NavLink>
                 </Menu.Item>
-                <Menu.Item key="News" icon={<HddOutlined />}>
+                <Menu.Item key="News" icon={<HddOutlined/>}>
                     <NavLink to="/news">
                         News
                     </NavLink>
                 </Menu.Item>
-                <Menu.Item key="music" icon={<CustomerServiceOutlined />}>
+                <Menu.Item key="music" icon={<CustomerServiceOutlined/>}>
                     <NavLink to="/music">
                         Music
                     </NavLink>

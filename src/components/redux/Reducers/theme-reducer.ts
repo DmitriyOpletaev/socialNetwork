@@ -30,7 +30,7 @@ const themeReducer = (state = initialState, action: ActionsType): InitialStateTy
 }
 
 type ActionsType = InferActionsTypes<typeof actions>
-const actions = {
+export const actions = {
     selectTheme: (theme:'dark'|'light') => ({type: "SET_THEME", payload:{theme}}as const)
 }
 
