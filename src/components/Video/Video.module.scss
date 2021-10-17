@@ -1,132 +1,113 @@
-$font-stack: Helvetica, sans-serif;
-$font-color: #dc2727;
-$primary-color: #333;
-$font-size: 10px;
+$font_size: 20px;
 
 
-.body {
-  font-style: $font-stack;
-  padding: 25px;
 
-}
-
-.navigation_wrapper {
-  font: 250% $font-stack;
-  cursor: pointer;
-  user-select: none;
-
-  .menu_item {
-    opacity: 0.7;
-  }
-
-  .active_menu {
-    color: #4a2197;
-    opacity: 1;
-  }
+.body_videos_page{
+    min-height: 80vh;
+    padding: 10px;
+    max-width: 1350px;
+    margin: 0 auto;
+    .search_bar_wrapper{
+        display: flex;
+        justify-content: center;
 
 
-}
-
-.SearchBar {
-  margin: 1em;
-  padding: 1em;
-
-  .SearchBar_InputContainer {
-    position: relative;
-    width: 80%;
-
-    .SearchBar_Input {
-      font-size: 2.5em;
-
+        .input_button_container{
+            width: 40%;
+            position: relative;
+            .find_button{
+                position: absolute;
+                top:0;
+                right: 0;
+                user-select: none;
+                cursor: pointer;
+            }
+        }
     }
+    .menu_and_content_wrapper{
+            margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
 
-    button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 10%;
-      font-size: 2em;
-    }
-  }
-
-
-}
-
-.myVideos {
-  display: grid;
-  grid-template-columns: 13fr 2fr;
-  padding: 2em;
-
-
-  .myVideos_menu {
-    background: rgba(124, 191, 112, 0.32);
-    margin-left: 2em;
-    font: 250% $font-stack;
-
-    div {
-      margin-bottom: 1em;
-    }
-  }
-
-  .myVideos_videosWrapper {
-    display: grid;
-    grid-row-gap: 3em;
-    justify-items: center;
-    .moreVideosButton{
-      width: 100%;
-      height: 5em;
-
-      button{
-        font-size: 2.5em;
-        height: 100%;
-      }
-    }
-    .video_container{
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-
-      .myVideos_details {
-        font-size: 1.5em;
-        background: rgba(162, 195, 238, 0.35);
-        width: 100%;
-        padding: 15px;
-        position: relative;
-        display: grid;
-        grid-template-rows: 1fr 0.5fr 1fr;
-
-        .videoTitle {
-          h2{
-            text-align: center;
-            color: #1a2e7f;
-          }
+        .menu_wrapper{
+            height: 500px;
+            width: 200px;
+            .menu_container{
+                div{
+                    font-size: 1.2*$font_size;
+                    margin-top: 10px;
+                }
+            }
         }
 
-        .channelTitle {
+        .content_wrapper{
+            display: flex;
+            justify-content: center;
+            width:80%;
 
+           .videos_preview_wrapper{
+                width: 100%;
+               .button_more{
+                   margin-top: 40px;
+               }
+               .video_preview_container{
+                    margin-top: 20px;
+                   height: 190px;
+                   display: flex;
+                    overflow: auto;
+                   position: relative;
+
+                   .img_preview_container{
+                       width: 500px;
+                       overflow: hidden;
+                       position: sticky;
+                       top:0;
+                       img{
+                           object-fit: cover;
+                           width: 100%;
+                           height: 100%;
+                           cursor:pointer;
+                       }
+                   }
+                   .video_details_container{
+                       padding: 0 9px;
+                       width: 100%;
+                       -webkit-box-shadow: -6px 0px 15px 0px rgba(34, 60, 80, 0.6) inset;
+                       -moz-box-shadow: -6px 0px 15px 0px rgba(34, 60, 80, 0.6) inset;
+                       box-shadow: -6px 0px 15px 0px rgba(34, 60, 80, 0.6) inset;
+
+                       .video_title{
+                           font-size: $font-size;
+                           text-align: left;
+                           font-weight: 450;
+                           color: #8a2bba;
+                       }
+                       .channel_title_video_publish_time_container{
+                           margin-top: 10px;
+                           font-weight: 500;
+                           text-align: left;
+
+                           .channel_title{
+                               color: #1a2e7f;
+                               font-size:0.95*$font-size ;
+                           }
+                          .video_publish_time{
+                              margin-left: 15px;
+                              color: #000000;
+                              font-size:0.7*$font-size ;
+                              opacity: 0.55;
+                                font-style: italic;
+                           }
+                       }
+                       .video_description{
+                           margin-top: 10px;
+                           text-align: left;
+                           overflow: auto;
+                       }
+                   }
+               }
+           }
         }
-
-        .descriptionVideo {
-
-        }
-
-        .dateVideo {
-          position: absolute;
-          bottom: 5px;
-          right: 5px;
-          font-style: italic;
-          opacity: 0.6;
-
-        }
-
-
-      }
     }
-
-
-
-
-
-  }
 }
 

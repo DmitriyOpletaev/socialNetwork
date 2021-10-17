@@ -98,7 +98,7 @@ const actions = {
 
     setError: (error: number | null) => ({
         type: 'deezer/SET_ERROR',
-        payload: {error}
+        payload: {error: error}
     } as const),
     setNextPrevToken: (next: string | null, prev: string | null) => ({
         type: 'deezer/SET_NEXT_PREV_TOKEN',

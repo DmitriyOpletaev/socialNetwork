@@ -4,9 +4,9 @@ import {
     getAudioIndex, getAudioMute, getAudioVolume, getAutoPlay,
     getCurrentPlaylist, getCurrentSongDetails, getCurrentTime,
     getIsPlaying
-} from "../../redux/Reducers/Audio_Player_Reducer";
-import {getMySongsPlaylist} from "../../redux/Reducers/MySongs_Reducer";
-import {getSearchPlaylist} from "../../redux/Selectors/Music_Selector";
+} from "../redux/Reducers/Audio_Player_Reducer";
+import {getMySongsPlaylist} from "../redux/Reducers/MySongs_Reducer";
+import {getSearchPlaylist} from "../redux/Selectors/Music_Selector";
 
 
 export function useAudio() {

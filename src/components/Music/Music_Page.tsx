@@ -14,7 +14,7 @@ import {
 } from '@ant-design/icons';
 import {getThemeMode} from "../redux/Reducers/theme-reducer";
 import {actionsMySongsPlaylist} from "../redux/Reducers/MySongs_Reducer";
-import {useAudio} from "../Video/Audio_Player/useAudio";
+import {useAudio} from "../Audio_Player/useAudio";
 
 
 const MusicPage = () => {

@@ -1,35 +1,21 @@
-import {AppStateType, BaseThunkType, InferActionsTypes} from "../redux-store";
-import firebase from "firebase/compat";
-import {authGoogle} from "../../api/Google_API_Auth";
-import {YoutubeAPI} from "../../api/Youtube_API";
+import {AppStateType, InferActionsTypes} from "../redux-store";
 
 
-type UserDetails={
-    name:string|null,
-    email: string|null ,
-    photo: string|null,
-    accessToken: string|null,
-}
+
+
+
+
 let initialState = {
     initializedGoogle: false,
-    isLoading: false,
-    user: null as UserDetails|null
+    access_token: null as string|null
 
 }
 
 export function getInitializedGoogle(state: AppStateType) {
     return state.googleAuth.initializedGoogle
 }
-
-export function getGoogleUser(state: AppStateType) {
-    return state.googleAuth.user
-}
-
-export function getIsLoading(state: AppStateType) {
-    return state.googleAuth.isLoading
-}
-export function getaccessToken(state: AppStateType) {
-    return state.googleAuth.user?.accessToken
+export function getAccessToken(state: AppStateType) {
+    return state.googleAuth.access_token
 }
 
 
@@ -38,23 +24,19 @@ const googleAuthReducer = (state = initialState, action: ActionsType): InitialSt
 
     switch (action.type) {
 
-        case "Google/INITIALIZED":
+        case "Google/SET_GOOGLE_LOGIN":
 
             return {
                 ...state,
-                initializedGoogle: action.payload.initialized
+                initializedGoogle: true,
+                access_token: action.payload.access_token
             }
-        case "Google/SET_USER_DETAILS":
+            case "Google/SET_GOOGLE_LOGOUT":
 
             return {
                 ...state,
-                user: action.payload.user
-            }
-        case "Google/SET_IS_LOADING":
-
-            return {
-                ...state,
-                isLoading: action.payload.isLoading,
+                initializedGoogle: false,
+                access_token: null
             }
 
 
@@ -64,59 +46,21 @@ const googleAuthReducer = (state = initialState, action: ActionsType): InitialSt
 }
 
 
-const actions = {
-    initialized: (initialized: boolean,) => ({
-        type: "Google/INITIALIZED",
-        payload: {initialized}
+export const actionsGoogleAuth = {
+    setGoogleLogin: (access_token: string,) => ({
+        type: "Google/SET_GOOGLE_LOGIN",
+        payload: {access_token}
 
     } as const),
-    setUser: (user: UserDetails|null) => ({
-        type: "Google/SET_USER_DETAILS",
-        payload: {user}
+    setGoogleLogout: () => ({
+        type: "Google/SET_GOOGLE_LOGOUT",
 
     } as const),
-    setIsLoading: (isLoading: boolean) => ({
-        type: "Google/SET_IS_LOADING",
-        payload: {isLoading}
 
-    } as const),
 
 }
 
 
-export const loginGoogle = (): ThunkType =>
-    async (dispatch) => {
-        dispatch(actions.setIsLoading(true))
-        const provider = new firebase.auth.GoogleAuthProvider()
-        const user1 = await authGoogle.signInWithPopup(provider)
-        const {user}= user1
-        dispatch(actions.setIsLoading(false))
-        if(user){
-
-            let userDetails = {
-                photo:user.photoURL,
-                name: user.displayName,
-                email: user.email,
-                // @ts-ignore
-                accessToken:user._delegate.accessToken
-            }
-            dispatch(actions.setUser(userDetails))
-        }
-        console.log(user1)
-        dispatch(actions.initialized(true))
-        console.log(user)
-    }
-export const logOutGoogle = (): ThunkType =>
-    async (dispatch) => {
-        dispatch(actions.setIsLoading(true))
-        await authGoogle.signOut()
-        dispatch(actions.initialized(false))
-        dispatch(actions.setUser(null))
-        dispatch(actions.setIsLoading(false))
-
-
-
-    }
 
 
 
@@ -126,5 +70,5 @@ export const logOutGoogle = (): ThunkType =>
 export default googleAuthReducer;
 
 
-type ActionsType = InferActionsTypes<typeof actions>
-type ThunkType = BaseThunkType<ActionsType>
+type ActionsType = InferActionsTypes<typeof actionsGoogleAuth>
+//type ThunkType = BaseThunkType<ActionsType>

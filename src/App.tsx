@@ -17,10 +17,10 @@ import {MyHeader} from "./components/Header/Header";
 import {PhotosPage} from "./components/Photos/PhotosPage";
 import {PraktikaPage} from "./components/praktika/praktika";
 import ChatPage from "./components/Dialogs/ChatPage";
-import {VideoPage} from "./components/Video/Video";
+import {VideoPage} from "./components/Video/Video_Page";
 import {Profile} from "./components/ProfileNew/Profile";
 import {getThemeMode} from "./components/redux/Reducers/theme-reducer";
-import {AudioPlayer} from "./components/Video/Audio_Player/AudioPlayer";
+import {AudioPlayer} from "./components/Audio_Player/AudioPlayer";
 const LoginPage = React.lazy(() => import("./components/LoginPage/LoginPage"))
 const MusicPage = React.lazy(() => import("./components/Music/Music_Page"))
 

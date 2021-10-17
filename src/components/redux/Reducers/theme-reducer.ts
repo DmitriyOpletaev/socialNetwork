@@ -3,7 +3,7 @@ import {AppStateType, InferActionsTypes} from "../redux-store";
 
 
 let initialState = {
-    themeMode: 'dark' as 'dark'|'light',
+    themeMode: 'light' as 'dark'|'light',
 }
 //----Selector
 export function getThemeMode(state:AppStateType){

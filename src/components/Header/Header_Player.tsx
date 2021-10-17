@@ -1,4 +1,4 @@
-import {useAudio} from "../Video/Audio_Player/useAudio";
+import {useAudio} from "../Audio_Player/useAudio";
 import {Button, Slider} from "antd";
 import m from "./Header_Player.module.scss";
 import React, {MutableRefObject, useEffect, useRef, useState} from "react";
