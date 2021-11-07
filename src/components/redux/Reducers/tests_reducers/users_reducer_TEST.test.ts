@@ -1,6 +1,6 @@
 import usersReducer, {actions, follow, InitialStateType, requestUsers, unfollow} from "../users-reducer";
-import {usersAPI} from '../../../api/users_API';
-import {Response, ResultCodeEnum} from "../../../api/API";
+import {usersAPI} from '../../../api/SamuraiJS_API/users_API';
+import {Response, ResultCodeEnum} from "../../../api/SamuraiJS_API/API";
 import exp from "constants";
 
 

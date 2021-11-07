@@ -1,6 +1,6 @@
-import {ResultCodeEnum, ResultCodeForCaptchaEnum} from "../../api/API";
+import {ResultCodeEnum, ResultCodeForCaptchaEnum} from "../../api/SamuraiJS_API/API";
 import { BaseThunkType, InferActionsTypes} from "../redux-store";
-import {authAPI, securityAPI} from "../../api/Auth&Security_API";
+import {authAPI, securityAPI} from "../../api/SamuraiJS_API/Auth&Security_API";
 import {FormikValues} from "formik";
 
 
@@ -69,7 +69,7 @@ export const logInMe = ( values:FormikValues ): ThunkType => async (
 
 
     } else {
-        let errorText = loginData.messages.length > 0 ? loginData.messages[0] : "Some Error"
+        let errorText = loginData.messages.length > 0 ? loginData.messages[0] : "Some ErrorNotification"
         //setSubmitting(false)
         //setStatus(errorText)
     }

@@ -1,12 +1,15 @@
-import preloader from "../../../assets/images/ajax-loader.gif";
 import React from "react";
-
+import {Spin} from "antd";
 
 function Preloader() {
-
+    const style = {
+        textAlign: 'center',
+        paddingTop: '12%',
+    }
     return (
-        <img alt="loading..." src={preloader}
-             style={{position: "absolute", width: "7em", top: "8.5em", left: "53.5%"}}/>
+        <div style={style}>
+            <Spin size="large" tip='Загрузка'/>
+        </div>
     )
 }
 

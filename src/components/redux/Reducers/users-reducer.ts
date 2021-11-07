@@ -1,9 +1,9 @@
-import {Response, ResultCodeEnum} from "../../api/API"
+import {Response, ResultCodeEnum} from "../../api/SamuraiJS_API/API"
 import {updateObjectInArray} from "../../utils/validators/object-helpers"
 import {UserType} from "../../../types/types"
 import {BaseThunkType, InferActionsTypes} from "../redux-store";
 import {Dispatch} from "redux";
-import {usersAPI} from "../../api/users_API";
+import {usersAPI} from "../../api/SamuraiJS_API/users_API";
 
 
 let initialState = {

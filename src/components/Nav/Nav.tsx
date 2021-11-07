@@ -43,7 +43,7 @@ function Nav() {
                         </Menu.Item>
 
 
-                        <Menu.Item key="1.2" icon={<UserOutlined/>}>
+                        <Menu.Item key="setting" icon={<UserOutlined/>}>
                             Setting
                         </Menu.Item>
                         <Menu.Item onClick={quit} key="1.3" icon={<UserOutlined/>}>
@@ -95,28 +95,8 @@ function Nav() {
                         Music
                     </NavLink>
                 </Menu.Item>
-                <SubMenu key="Links" title='Links' icon={<PartitionOutlined/>}>
-
-                    <Menu.Item>
-                        <a href="https://social-network.samuraijs.com/">
-                            Social Network
-                        </a>
-                    </Menu.Item>
-
-                    <Menu.Item>
-                        <a href="https://ant.design/components/overview/">
-                            Ant Design
-                        </a>
-                    </Menu.Item>
-                    <Menu.Item>
-                        <a href="https://ru.reactjs.org/">
-                            React Documentation
-                        </a>
-                    </Menu.Item>
-
-                </SubMenu>
-                <Menu.Item icon={<PieChartOutlined/>}>
-                    <NavLink to='/praktika/'>
+                <Menu.Item key='praktika' icon={<PieChartOutlined/>}>
+                    <NavLink to='/praktika'>
                         praktika
                     </NavLink>
                 </Menu.Item>

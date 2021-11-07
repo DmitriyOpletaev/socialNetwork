@@ -1,0 +1,238 @@
+.section_container {
+  margin-bottom: 30px;
+  -webkit-box-shadow: 0px 0px 19px 5px rgba(34, 60, 80, 0.2) inset;
+  -moz-box-shadow: 0px 0px 19px 5px rgba(34, 60, 80, 0.2) inset;
+  box-shadow: 0px 0px 19px 5px rgba(34, 60, 80, 0.2) inset;
+
+  .section_title {
+    color: #4b1e7e;
+    margin-left: 15px;
+
+  }
+
+  .section_description {
+    font-size: 14px;
+    margin: 0 15px;
+    color: #2f3185;
+
+    .open_button {
+      cursor: pointer;
+      user-select: none;
+      color: #a428c5;
+      margin-left: 20px;
+      font-weight: 500;
+    }
+  }
+}
+
+
+.channels_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px);
+  justify-content: center;
+  grid-gap: 25px 25px;
+  padding: 10px 10px 15px 10px;
+
+
+  .channel_container {
+    height: 200px;
+    padding-top: 5px;
+    min-height: 240px;
+    -webkit-box-shadow: 0px 0px 14px 9px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0px 0px 14px 9px rgba(34, 60, 80, 0.2);
+    box-shadow: 0px 0px 14px 9px rgba(34, 60, 80, 0.2);
+    border-radius: 3%;
+
+    .channel_logo_container {
+      margin: 0 auto;
+      height: 110px;
+      width: 110px;
+      overflow: hidden;
+      border-radius: 100%;
+      cursor: pointer;
+
+      img {
+        object-fit: cover;
+        height: 100%;
+      }
+    }
+
+
+    .title {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 500;
+      margin-top: 5px;
+      height: 20%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #791d47;
+    }
+
+    .subscribers {
+      text-align: center;
+      font-size: 15px;
+      color: #4b1048;
+    }
+
+    .button_wrapper {
+      display: flex;
+      justify-content: center;
+
+      .button_container {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 12px;
+        width: 108px;
+        height: 23px;
+      }
+    }
+
+
+  }
+}
+
+
+.playlist_video_Count {
+  font-size: 18px;
+  margin: 10px 15px;
+  color: #2f3185;
+}
+
+.slider_container {
+  width: 92%;
+  margin: 10px auto;
+
+  .button_next_prev, {
+    opacity: 0.8;
+    background: rgba(0, 0, 0, 0.48);
+    border-radius: 100%;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.48);
+    }
+  }
+
+  .video_container {
+    padding: 0 7px;
+    height: 180px;
+  }
+}
+
+
+.playlists_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 280px);
+  justify-content: center;
+  grid-gap: 20px 30px;
+  margin: 15px 0;
+  .playlist_container {
+    cursor: pointer;
+    min-height: 207px;
+    -webkit-box-shadow: 0 0 10px 9px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0 0 10px 9px rgba(34, 60, 80, 0.2);
+    box-shadow: 0 0 10px 9px rgba(34, 60, 80, 0.2);
+
+    .playlist_preview_container {
+      height: 165px;
+      width: 280px;
+      overflow: hidden;
+      position: relative;
+
+      img {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        object-position: center;
+      }
+
+      .playlist_info_container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.71);
+        height: 100%;
+        width: 35%;
+
+        .playlist_info {
+          color: white;
+          font-size: 22px;
+          font-weight: 500;
+          text-align: center;
+
+          div {
+            margin: 30%;
+          }
+        }
+      }
+
+      .play_button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.56);
+        height: 100%;
+        width: 100%;
+        opacity: 0;
+        transition: opacity 0.1s;
+        color: white;
+        font-weight: 500;
+        font-size: 20px;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        span {
+          margin: 25% 0 0 2%;
+        }
+      }
+    }
+
+    .title {
+      font-size: 15px;
+      font-weight: 500;
+      color: #2f3185;
+      height: 42px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+  }
+}
+
+
+.channelVideos_wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  grid-gap: 30px 30px;
+  justify-content: center;
+  padding: 15px 0 15px 0;
+
+  .videoContainer {
+    height: 200px;
+    overflow: hidden;
+    -webkit-box-shadow: 0 0 10px 9px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 0 0 10px 9px rgba(34, 60, 80, 0.2);
+    box-shadow: 0 0 10px 9px rgba(34, 60, 80, 0.2);
+  }
+}
+
+.button_more {
+  height: 100%;
+  font-size: 1.6em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+

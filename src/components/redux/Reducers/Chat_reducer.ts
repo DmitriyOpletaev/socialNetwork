@@ -1,6 +1,6 @@
 
 import {BaseThunkType, InferActionsTypes} from "../redux-store";
-import {chatAPI, ChatMessage, Status} from "../../api/chat_API";
+import {chatAPI, ChatMessage, Status} from "../../api/SamuraiJS_API/chat_API";
 import {Dispatch} from "redux";
 import {v1} from 'uuid'
 import {ChatMessageAPIType} from "../../Dialogs/Chat";

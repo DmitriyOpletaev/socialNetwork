@@ -3,13 +3,9 @@ $font_size: 15px;
 .current_video_container {
     min-height: 85vh;
     width: 100%;
-    .loading{
-       text-align: center;
-        margin-top: 10%;
-    }
+
     .player_container {
-        border: 1px black solid;
-        height: 520px;
+        height: 533px;
         width: 90%;
         margin: 0 auto;
     }
@@ -31,36 +27,12 @@ $font_size: 15px;
 .related_videos_wrapper {
     width: 350px;
     .video_container {
-        font-size: 0.65*$font-size;
+        font-size:0.9*$font-size;
         margin-bottom: 15px;
-        height: 190px;
-        border: black solid 1px;
+        height: 200px;
         -webkit-box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
         -moz-box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
         box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
-
-        .img_container {
-            width: 100%;
-            height: 80%;
-
-            img {
-                object-fit: cover;
-                width: 100%;
-                height: 100%;
-                cursor: pointer;
-            }
-
-        }
-
-        .title {
-            height: 20%;
-            overflow: hidden;
-            color: #442093;
-            font-weight: 500;
-            text-align: center;
-            font-size: 0.7*$font_size;
-
-        }
     }
 }
 
@@ -75,7 +47,7 @@ $font_size: 15px;
         color: #1a2e7f;
     }
     .video_statistics {
-        margin-top: 2px;
+        margin: 12px 0;
         font-size: 0.9em;
         display: flex;
         justify-content: space-between;
@@ -93,22 +65,44 @@ $font_size: 15px;
             font-size: 0.9*$font_size;
 
         }
-
-        .likes_container {
-            margin: 10px 10px 0 0;
-            span {
-                font-size: 1.2*$font_size;
-                margin: 0 2px 0 10px ;
-                user-select: none;
-                cursor: pointer;
-                &.like{
-                    color: #2e7922;
-                }
-                &.dislike{
-                    color: red;
+        .rating_and_complains_wrapper{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            .likes_container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                .like, .dislike {
+                    font-size: 1.2*$font_size;
+                    margin: 0 2px 0 10px ;
+                    user-select: none;
+                    cursor: pointer;
+                    white-space: nowrap;
+                    &.like{
+                        color: #2e7922;
+                    }
+                    &.dislike{
+                        color: red;
+                    }
+                    span{
+                        margin-left: 5px;
+                    }
                 }
             }
+            .complains_button{
+                font-size: 18px;
+                color: #9a5410;
+                cursor: pointer;
+                margin-left: 10px;
+                transition: transform 0.1s;
+                &:active{
+                    transform: scale(0.9);
+                }
+            }
+
         }
+
     }
 
     .channelDetails_container{
@@ -142,6 +136,12 @@ $font_size: 15px;
                 transform: scale(0.85);
             }
 
+        }
+        .subscribe_button_container{
+            width: 150px;
+            height: 25px;
+            font-size: 15px;
+            margin-left: 60px;
         }
 
 
@@ -211,5 +211,37 @@ $font_size: 15px;
         text-align: center;
     }
 }
+
+.complains_modal_window_title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    padding-right: 25px;
+    img{
+        height: 65px;
+        user-select: none;
+    }
+    h2{
+        color: #1a2e7f;
+        margin-top: 10px;
+    }
+}
+.complains_modal_window{
+
+    .complains_modal_window_radioElement{
+        margin-bottom: 10px;
+        font-size: 17px;
+
+    }
+    .complains_modal_window_selectElement{
+        margin-left: 24px;
+    }
+    .comment{
+        margin-top: 20px;
+
+    }
+}
+
 
 

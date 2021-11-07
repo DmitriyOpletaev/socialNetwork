@@ -1,5 +1,4 @@
 import React from "react";
-import {Redirect, useHistory} from "react-router-dom";
 import {connect} from "react-redux";
 import {AppStateType} from "../redux/redux-store";
 import LoginPage from "../LoginPage/LoginPage";
@@ -15,10 +14,6 @@ let mapStateToPropsForRedirect = (state:AppStateType) => ({
 export function withAuthRedirect<WCP>(WrappedComponent:React.ComponentType<WCP>) {
 
     const RedirectComponent:React.FC<MapState&DispatchProps>=(props)=> {
-
-
-
-
 
         let {isAuth, ...restProps}=props
         if (!isAuth) {

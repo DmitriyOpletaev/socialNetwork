@@ -1,4 +1,4 @@
-export interface Channels_Types<Snippet=null, Statistics=null, BrandingSettings=null,Status=null> {
+export interface Channels_Types<Snippet = null, Statistics = null, BrandingSettings = null, Status = null> {
     kind: string
     etag: string
     nextPageToken: string
@@ -7,17 +7,17 @@ export interface Channels_Types<Snippet=null, Statistics=null, BrandingSettings=
         totalResults: number
         resultsPerPage: number
     }
-    items: Array<ChannelItems<Snippet, Statistics, BrandingSettings,Status>>
+    items: Array<ChannelItems<Snippet, Statistics, BrandingSettings, Status>>
 }
 
-interface ChannelItems<Snippet, Statistics, BrandingSettings,Status> {
+export interface ChannelItems<Snippet, Statistics, BrandingSettings, Status> {
     kind: string
     etag: string
     id: string
     snippet: Snippet
     statistics: Statistics
     brandingSettings: BrandingSettings
-    status:Status
+    status: Status
 }
 
 
@@ -43,7 +43,7 @@ export interface ChannelSnippet {
         title: string
         description: string
     }
-    country: string
+    country?: string
 }
 
 export interface ChannelImage {
@@ -64,9 +64,37 @@ export interface ChannelBrandingSettings {
     }
 }
 
-export interface ChannelStatus{
-        privacyStatus: string
-        isLinked: boolean
-        longUploadsStatus: string
-        madeForKids: boolean
+export interface ChannelStatus {
+    privacyStatus: string
+    isLinked: boolean
+    longUploadsStatus: string
+    madeForKids: boolean
+}
+
+//---------------------Channel Sections
+
+export interface ChannelSectionsResponse{
+    kind: string
+    etag: string
+    items:Array<ChannelSections>
+}
+
+export interface ChannelSections {
+    kind: string
+    etag: string
+    id: string
+    snippet: {
+        type: string
+        channelId: string
+        title: string
+        position: number
+    },
+    contentDetails: {
+        playlists: [
+            string
+        ],
+        channels: [
+            string
+        ]
     }
+}

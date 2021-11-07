@@ -1,5 +1,5 @@
-import {PhotosType} from "../../types/types"
-import {GetItems, instance, Response} from "./API"
+import {PhotosType} from "../../../types/types"
+import {GetItems, instanceSamuraiJS, Response} from "./API"
 
 
 type Users = {
@@ -13,7 +13,7 @@ export const usersAPI = {
 
     getUsers(currentPage = 1, pageSize = 10, term:string='',friend:null|boolean=null) {
 
-        return instance.get<GetItems<Array<Users>>>(
+        return instanceSamuraiJS.get<GetItems<Array<Users>>>(
             `users?page=${currentPage}&count=${pageSize}&term=${term}`+(friend===null ? '' : `&friend=${friend}`),
         ).then(response => {
             return response.data
@@ -21,12 +21,12 @@ export const usersAPI = {
     },
 
     follow(userId: number) {
-        return instance.post<Response>(`follow/${userId}`).then(res => res.data) as Promise<Response>
+        return instanceSamuraiJS.post<Response>(`follow/${userId}`).then(res => res.data) as Promise<Response>
 
     },
 
     unfollow(userId: number) {
-        return instance.delete<Response>(`follow/${userId}`).then(res => res.data) as Promise<Response>
+        return instanceSamuraiJS.delete<Response>(`follow/${userId}`).then(res => res.data) as Promise<Response>
 
     },
 }

@@ -1,0 +1,45 @@
+
+.subscribe_button {
+  width: 100%;
+  height: 100%;
+  font-size: 1em;
+  background: #f14444;
+  border: none;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s transform, 0.5s background;
+
+  &:active {
+    transform: scale(0.975);
+  }
+
+  &:hover {
+    background: #da3e3e;
+  }
+
+  &:focus {
+    background: #f14444;
+  }
+
+  &.unsubscribe_button {
+    background: #b2aeae;
+
+  }
+
+
+  .title {
+    margin-bottom: 1.5%;
+  }
+}
+
+.channelTitle {
+  color: #0033ff;
+  font-weight: 500;
+}
+
+.iconQuestion {
+  margin-top: -3.5px;
+  margin-left: -5px;
+}

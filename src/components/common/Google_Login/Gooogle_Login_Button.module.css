@@ -1,0 +1,31 @@
+.login_button{
+    width: 110px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a2e7f;
+
+}
+
+.wrapped_component_container{
+    height: 100%;
+    width: 100%;
+}
+/*--------Popover if user unauthorised------------*/
+
+.text{
+    text-align: center;
+    color: #bd2020;
+    font-size: 15px;
+    font-weight: 500;
+}
+.button_container{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+}
+
+

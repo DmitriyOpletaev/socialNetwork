@@ -1,11 +1,13 @@
 import React, {FC, useEffect, useMemo} from "react";
-import m from "./Modal_Window_Styles.module.scss";
+/*
+
+import m from "../Modal_Window_Styles.module.scss";
 import {Avatar, Comment, Tooltip} from "antd";
 import {DislikeOutlined, LikeOutlined} from "@ant-design/icons";
 import moment from "moment";
 import {useDispatch, useSelector} from "react-redux";
-import {getVideoCommentAnswers} from "../../redux/Selectors/Videos_Selector";
-import {getCommentAnswers} from "../../redux/Reducers/Video_Page_Reducers/Current_Video_Reducer";
+import {getVideoCommentAnswers} from "../../../redux/Selectors/Videos_Selector";
+import {getCommentAnswers} from "../../../redux/Reducers/Video_Page_Reducers/Current_Video_Reducer";
 
 interface CommentAnswers {
     parentCommentId: string
@@ -27,7 +29,6 @@ export const CommentsAnswers: FC<CommentAnswers> = (props) => {
         }
     }, [])
 
-    const {commentAnswers,loadingAnswers} = useSelector(getVideoCommentAnswers)
     const answers = commentAnswers.find(c => c.parentId === parentCommentId)
 
     const CommentAnswers = useMemo(() => {
@@ -90,3 +91,4 @@ export const CommentsAnswers: FC<CommentAnswers> = (props) => {
 }
 
 
+*/

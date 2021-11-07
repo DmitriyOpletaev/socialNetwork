@@ -1,36 +1,33 @@
-import React, {FC} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import React from "react";
+import { useSelector} from "react-redux";
 import {getCurrentVideoChannel} from "../../../redux/Selectors/Videos_Selector";
 import {countReformat2} from "../../../utils/validators/string_formatting";
 import m from "../Modal_Window_Styles.module.scss";
 import {Avatar, Tooltip} from "antd";
 import {YoutubeFilled} from "@ant-design/icons";
-import {getCurrentChannelInfo} from "../../../redux/Reducers/Video_Page_Reducers/Current_Channel_Reducer";
+import {useVideo} from "../../Video_Components/useVideo";
+import {SubscribeChannelButton} from "../../Video_Components/Youtube_Subscribe_Button/YouTube_Subscribe_Button";
 
-type ChannelDetailsBlockProps = {
-    setVisiblePopup: (visiblePopup: 'video' | 'channel' | null) => void
-}
-export const ChannelDetailsBlock: FC<ChannelDetailsBlockProps> = ({setVisiblePopup}) => {
-    const {title, subscribersCount, imgUrl ,channelId} = useSelector(getCurrentVideoChannel)
+
+
+export const ChannelDetailsBlock = () => {
+    const {title, subscribersCount, imgUrl, channelId} = useSelector(getCurrentVideoChannel)
     const subscribes = countReformat2(subscribersCount)
     const channelLink = `https://www.youtube.com/channel/${channelId}`
-    const dispatch = useDispatch()
+    const {openChannel} = useVideo()
 
-    function openChannel() {
-        setVisiblePopup('channel')
-        dispatch(getCurrentChannelInfo(channelId))
-    }
+
 
     return (
         <div className={m.channelDetails_container}>
-            <div onClick={openChannel}>
+            <div onClick={()=>openChannel(channelId)}>
                 <Tooltip placement="left" title={title}>
                     <Avatar className={m.channel_avatar} src={imgUrl}/>
                 </Tooltip>
             </div>
             <div className={m.channelInformation_container}>
                 <Tooltip placement="top" title={title}>
-                    <div className={m.channel_title} onClick={openChannel}>
+                    <div className={m.channel_title} onClick={()=>openChannel(channelId)}>
                         {title}
                     </div>
                 </Tooltip>
@@ -43,7 +40,9 @@ export const ChannelDetailsBlock: FC<ChannelDetailsBlockProps> = ({setVisiblePop
                     <a href={channelLink} target='_blank' rel="noreferrer"><YoutubeFilled/></a>
                 </Tooltip>
             </div>
-
+            <div className={m.subscribe_button_container}>
+                <SubscribeChannelButton channelId={channelId} channelTitle={title}/>
+            </div>
         </div>
     )
 }

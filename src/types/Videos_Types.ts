@@ -2,6 +2,13 @@ export interface ErrorType {
     code: number
     message: string
 }
+export interface PreviewVideo{
+    videoId:string
+    preview:string
+    title:string
+}
+
+
 export interface VideoDetails  {
     videoId: string,
     title: string
@@ -9,9 +16,9 @@ export interface VideoDetails  {
     description: string
     publishTime: string
     channelId: string
-    videoPreviewImg:string
+    previewImg:string
     totalViews?:string
-    videoDuration?:string
+    duration:string
 }
 export  interface CommentType {
     commentId:string
@@ -22,24 +29,22 @@ export  interface CommentType {
     publishedAt:string
     text:string
     totalReplyCount:number
-    videoId:string
+    answersNextPageToken:string|null
+    isLoadingAnswers:boolean
+    answers:Array<CommentAnswerType>|[]
 }
-export  interface CommentsAnswers {
-    parentId:string
-    nextPageToken: string|null
-    answersArray: Array<{
-        commentId:string
-        authorChannelId:string
-        authorDisplayName:string
-        authorProfileImageUrl:string
-        likeCount:number
-        publishedAt:string
-        text:string
-    }>
+export interface CommentAnswerType{
+    commentId:string
+    authorChannelId:string
+    authorDisplayName:string
+    authorProfileImageUrl:string
+    likeCount:number
+    publishedAt:string
+    text:string
 }
 
 export interface CurrentVideoDetails{
-    id:string
+    videoId:string
     title:string
     description:string
     publishedAt:string
@@ -47,9 +52,9 @@ export interface CurrentVideoDetails{
 }
 export interface VideoStatistics {
     commentCount: string
+    likeCount: string
     dislikeCount: string
     favoriteCount: string
-    likeCount: string
     viewCount: string
 }
 export interface CurrentVideoChannelDetails{
@@ -59,13 +64,6 @@ export interface CurrentVideoChannelDetails{
     imgUrl:string
     subscribersCount:string
 }
-export interface RelatedVideosType {
-    videoId: string
-    title: string
-    channelTitle: string
-    channelId: string
-    videoPreviewImg:string
-}
 
 
 
@@ -73,10 +71,9 @@ export interface RelatedVideosType {
 export interface CurrentChannelInfo{
     id:string
     image:string
-    banner:string
     title:string
     description:string
-    countryISO:string
+    countryISO?:string
     published:string
     channelStatistics:{
         subscriberCount:string
@@ -85,3 +82,39 @@ export interface CurrentChannelInfo{
         videoCount:string
     }
 }
+
+export interface MultipleChannelsSections{
+    title:string
+    channels:Array<MultipleChannel>
+}
+
+export interface MultipleChannel{
+    channelId:string
+    title:string
+    logo:string
+    subscribersCount:string
+}
+
+
+export interface PlaylistDetails{
+    playlistTitle:string
+    description:string
+    playlistPreview:string
+    totalVideoCount:number
+    playlistId:string
+    resultsPerPage:number
+    videos:Array<PreviewVideo>|null
+}
+
+export interface PlaylistInfo{
+    playlistTitle:string
+    description:string
+    playlistPreview:string
+    totalVideoCount:number
+    playlistId:string
+    nextPageToken:string
+    resultsPerPage:number
+}
+
+
+

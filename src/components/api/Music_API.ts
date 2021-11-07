@@ -2,7 +2,7 @@ import axios from "axios";
 import {SongType} from "../redux/Reducers/Music_Reducer";
 
 
-const instanceMusik = axios.create({
+const instanceMusic = axios.create({
     baseURL: 'https://deezerdevs-deezer.p.rapidapi.com/',
     headers: {
         'x-rapidapi-host': 'deezerdevs-deezer.p.rapidapi.com',
@@ -25,19 +25,17 @@ type Response = Array<SongType>
 
 export const MusicAPI = {
     getMusicBySearch(searchTerm: string) {
-        return instanceMusik.get<any>(`search?q=${searchTerm}`).then(
+        return instanceMusic.get<any>(`search?q=${searchTerm}`).then(
             res => {
                 return res.data
             })
-
     },
     getNextOrPrevPage(token:string) {
-        return instanceMusik.get<any>(`${token}`).then(
+        return instanceMusic.get<any>(`${token}`).then(
             res => {
                 console.log(res.data)
                 return res.data
             })
-
     },
 
 

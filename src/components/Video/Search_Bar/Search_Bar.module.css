@@ -1,0 +1,33 @@
+.search_bar_wrapper {
+    display: flex;
+    justify-content: center;
+
+}
+.input_button_container {
+    width: 40%;
+    position: relative;
+}
+
+.suffix_icon{
+    color: #9fa4ab;
+    font-size: 17px;
+}
+.suffix_wrapper{
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+.select_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.select_block{
+    margin-left: 5px;
+    font-size: 12px;
+    width: 100px;
+}
+.option_element{
+    font-size: 12px;
+}

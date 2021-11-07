@@ -6,10 +6,8 @@ import { ChannelDetailsBlock } from "./ChannelDetails";
 import {DescriptionBlock} from "./Descriptions";
 import {VideoStatisticsBlock} from "./Statistics";
 
-type VideoDetailsProps = {
-    setVisiblePopup: (visiblePopup: 'video' | 'channel' | null) => void
-}
-export const VideoDetailsBlock: FC<VideoDetailsProps> = ({setVisiblePopup}) => {
+
+export const VideoDetailsBlock = () => {
     const {title, publishedAt, tags, description} = useSelector(getCurrentVideo)
     return (
         <>
@@ -17,7 +15,7 @@ export const VideoDetailsBlock: FC<VideoDetailsProps> = ({setVisiblePopup}) => {
                 <span>{title}</span>
             </div>
             <VideoStatisticsBlock publishedAt={publishedAt}/>
-            <ChannelDetailsBlock setVisiblePopup={setVisiblePopup}/>
+            <ChannelDetailsBlock/>
             <DescriptionBlock description={description} tags={tags}/>
         </>
     )

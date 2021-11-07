@@ -1,7 +1,7 @@
-import {ResultCodeEnum} from "../../api/API";
+import {ResultCodeEnum} from "../../api/SamuraiJS_API/API";
 import {PhotosType, ProfileType} from "../../../types/types";
 import { BaseThunkType, InferActionsTypes} from "../redux-store";
-import {profileAPI} from "../../api/profile_API";
+import {profileAPI} from "../../api/SamuraiJS_API/profile_API";
 import {bool} from "yup";
 
 

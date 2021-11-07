@@ -6,26 +6,3 @@
     grid-row-gap: 1em;
     width: 100%;
 }
-
-.photos{
-    overflow: hidden;
-    position: relative;
-    display: flex;
-}
-
-.foto{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    cursor: pointer;
-}
-
-
-@media (max-width: 1200px) {
-    .wrapper{
-        grid-template-columns: 1fr 1fr 1fr ;
-        padding: 0;
-    }
-
-}
