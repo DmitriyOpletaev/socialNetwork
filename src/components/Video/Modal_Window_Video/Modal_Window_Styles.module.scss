@@ -184,7 +184,18 @@ $font_size: 15px;
             margin-top: 5px;
             color: #2f3185;
         }
+        .comment_if_user_unauthorized{
+            font-size: 14px;
+            margin-top: 10px;
+            display: flex;
+            justify-content: left;
+
+            span{
+                color: #0033ff;
+            }
+        }
         .comment_container{
+            position: relative;
             .name{
                 color: #4a2594;
                 font-size: $font-size;
@@ -194,8 +205,61 @@ $font_size: 15px;
                     background: rgba(0, 0, 0, 0.21);
                 }
             }
-        }
+            .comment_content_wrapper{
+                .comment_rating_wrapper{
+                    cursor: pointer;
+                    user-select: none;
+                    .open_close_answers_buttons_container{
+                            color: blue;
+                    }
+                    .answer_button{
+                        margin-left: 12px;
+                        color: blue;
+                    }
 
+                }
+            }
+            .spam_button{
+                position: absolute;
+                top:0;
+                right: 15px;
+                user-select: none;
+                cursor: pointer;
+                opacity: 0.2;
+                transition: opacity 0.3s;
+                color: #772f22;
+                &:hover{
+                    opacity: 1;
+                }
+                &:active{
+                    transform: scale(0.95);
+                }
+            }
+            .input_container{
+                position: relative;
+                margin-bottom: 5px;
+                .input_comment{
+                    border:none;
+                    border-bottom: 1px solid rgba(131, 152, 225, 0.47);
+                    padding: 5px 10px;
+                    outline: none;
+                    transition: border-bottom 0s 0.001s;
+                    &:focus{
+                        border-bottom:none;
+                    }
+                }
+                .comment_input_buttons_container{
+                    display: flex;
+                    justify-content: right;
+                    position: absolute;
+                    right: 0;
+                }
+            }
+
+        }
+        .answers_wrapper{
+            margin-left: 70px;
+        }
         .more_close_answers_button_container{
             font-size: 0.9*$font-size;
             color: #2945af;

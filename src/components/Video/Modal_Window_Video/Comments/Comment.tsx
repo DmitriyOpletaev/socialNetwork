@@ -1,10 +1,14 @@
-import {Avatar, Comment} from "antd";
-import m from "../Modal_Window_Styles.module.scss";
-import {DislikeOutlined, LikeOutlined} from "@ant-design/icons";
-import React, {FC, useState} from "react";
-import {CommentAnswerType, CommentType} from "../../../../types/Videos_Types";
-import {dateReformat} from "../../../utils/validators/string_formatting";
-import {CommentAnswer} from "./Answer";
+import {Avatar, Comment} from "antd"
+import m from "../Modal_Window_Styles.module.scss"
+import {DislikeOutlined, LikeOutlined, ArrowDownOutlined} from '@ant-design/icons'
+import React, {FC, useState} from "react"
+import {CommentType} from "../../../../types/Videos_Types"
+import {dateReformat} from "../../../utils/validators/string_formatting"
+import {CommentAnswer} from "./Answer"
+import {useDispatch} from "react-redux"
+import {getCommentAnswers} from "../../../redux/Reducers/Video_Page_Reducers/Current_Video_Reducer"
+import {AnswerInput} from "./Answer_Input";
+import {MarkAsSpamButton} from "./Mark_As_Spam_Button";
 
 
 export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
@@ -13,9 +17,21 @@ export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
         totalReplyCount, likeCount, authorChannelId, authorDisplayName,
         authorProfileImageUrl, publishedAt
     } = comment
-    const Answers = answers.map(answer => (
+    const Answers = answers && answers.map(answer => (
         <CommentAnswer answer={answer} channelId={channelId} key={answer.commentId}/>))
     const [isOpenAnswers, setIsOpenAnswers] = useState(false)
+    const [isShowInput, setIsShowInput] = useState(false)
+    const dispatch = useDispatch()
+
+    function openAnswers() {
+        !answers && dispatch(getCommentAnswers(commentId))
+        setIsOpenAnswers(true)
+    }
+
+    function closeAnswers() {
+        setIsOpenAnswers(false)
+    }
+
     return (
         <>
             <Comment className={m.comment_container} key={commentId}
@@ -26,57 +42,89 @@ export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
                      }
                      avatar={<Avatar src={authorProfileImageUrl}/>}
                      content={
-                         <>
+                         <div className={m.comment_content_wrapper}>
                              <p dangerouslySetInnerHTML={{__html: text}}/>
-                             <p>
+                             <div className={m.comment_rating_wrapper}>
                                  <span><LikeOutlined/></span>
                                  <span style={{margin: '5px'}}>{likeCount}</span>
                                  <span style={{margin: '8px'}}><DislikeOutlined/></span>
                                  {totalReplyCount > 0 &&
-                                 <OpenCloseAnswers commentId={commentId} isOpenAnswers={isOpenAnswers}
-                                                   setIsOpenAnswers={setIsOpenAnswers}
-                                                   totalReplyCount={totalReplyCount}
-                                 />}
-                             </p>
-                         </>
+                                 <span>
+                                     <OpenCloseAnswers isOpenAnswers={isOpenAnswers}
+                                                       closeAnswers={closeAnswers}
+                                                       openAnswers={openAnswers}
+                                                       totalReplyCount={totalReplyCount}/>
+                                 </span>
+                                 }
+                                 <span className={m.answer_button}
+                                       onClick={() => setIsShowInput(true)}>
+                                        Ответить
+                                 </span>
+                             </div>
+                             <MarkAsSpamButton commentId={commentId}/>
+                         </div>
                      }
-                     datetime={<span>{dateReformat(publishedAt)}</span>}
+                     datetime={
+                         <span>{dateReformat(publishedAt)}</span>
+                     }
             />
-            {isOpenAnswers && Answers}
-            <div className={m.more_close_answers_button_container}>
-                {isOpenAnswers && <>
-                <span onClick={()=>setIsOpenAnswers(false)}
-                    className={m.open_close_answers_button}>Скрыть ответы</span>
-                    <span className={m.answers_button_more}>Еще</span>
-                </>
-                }
+
+
+            <div className={m.answers_wrapper}>
+                {isShowInput && <AnswerInput setIsShowInput={setIsShowInput} parentId={commentId}/>}
+                {isOpenAnswers && Answers}
             </div>
+            <MoreCloseAnswers isOpenAnswers={isOpenAnswers} closeAnswers={closeAnswers}
+                              answersNextPageToken={answersNextPageToken}
+                              totalReplyCount={totalReplyCount} commentId={commentId}
+            />
         </>
     )
 }
 
 
+const OpenCloseAnswers: FC<OpenCloseAnswersProps> = (
+    {isOpenAnswers, closeAnswers, totalReplyCount, openAnswers}
+) => {
+    return (
+        <span className={m.open_close_answers_buttons_container}>
+            {isOpenAnswers ?
+                <span style={{margin: '15px'}}
+                      onClick={closeAnswers}>
+                    Скрыть ответы
+                </span>
+                :
+                <span onClick={openAnswers}>
+                    Показать {totalReplyCount} ответов
+                    <ArrowDownOutlined style={{marginLeft: '3px'}}/>
+                </span>
+            }
+        </span>
+    )
+}
+const MoreCloseAnswers: FC<MoreCloseAnswersProps> = (
+    {isOpenAnswers, closeAnswers, answersNextPageToken, commentId}
+) => {
+    const dispatch = useDispatch()
 
-const OpenCloseAnswers: FC<OpenCloseAnswersProps> = ({commentId, isOpenAnswers, setIsOpenAnswers, totalReplyCount}) => {
-    function openAnswers() {
-        setIsOpenAnswers(true)
-    }
-
-    function closeAnswers() {
-        setIsOpenAnswers(false)
+    function openMoreAnswers() {
+        dispatch(getCommentAnswers(commentId, answersNextPageToken))
     }
 
     return (
-        <span className={m.open_close_answers_button}>
-            {isOpenAnswers ?
-                <span style={{margin: '15px', color: 'blue', cursor: 'pointer'}}
-                      onClick={closeAnswers}>Скрыть ответы </span>
-                :
-                <span style={{color: 'blue', cursor: 'pointer'}}
-                      onClick={openAnswers}>Показать {totalReplyCount} ответов</span>
+        <div className={m.more_close_answers_button_container}>
+            {isOpenAnswers && <>
+                <span onClick={closeAnswers}
+                      className={m.open_close_answers_button}>Скрыть ответы</span>
+                {answersNextPageToken &&
+                <span className={m.answers_button_more}
+                      onClick={openMoreAnswers}>
+                    Еще
+                </span>
+                }
+            </>
             }
-
-        </span>
+        </div>
     )
 }
 
@@ -85,10 +133,16 @@ type VideoCommentProps = {
     comment: CommentType
     channelId: string
 }
-
 type OpenCloseAnswersProps = {
-    commentId: string
-    isOpenAnswers: boolean,
-    setIsOpenAnswers: (isOpenAnswers: boolean) => void
+    openAnswers: () => void
+    isOpenAnswers: boolean
+    closeAnswers: () => void
     totalReplyCount: number
+}
+type MoreCloseAnswersProps = {
+    isOpenAnswers: boolean,
+    closeAnswers: () => void
+    totalReplyCount: number
+    answersNextPageToken: string | null
+    commentId: string
 }

@@ -1,24 +1,25 @@
-import {BaseThunkType, InferActionsTypes} from "../../redux-store";
-import {YoutubeAPIVideosList} from "../../../api/Youtube_API/Videos_List";
+import {BaseThunkType, InferActionsTypes} from "../../redux-store"
+import {YoutubeAPIVideosList} from "../../../api/Youtube_API/Videos_List"
 import {
+    CommentAnswerType,
     CommentType,
     CurrentVideoChannelDetails, CurrentVideoDetails, ErrorType, PreviewVideo,
     VideoStatistics
-} from "../../../../types/Videos_Types";
+} from "../../../../types/Videos_Types"
 import {
     VideosListByCategoryResponse,
     VideosListResponse
-} from "../../../api/Youtube_API/Types_Youtube_API/Videos_Types";
-import {CommentAnswersThread, CommentThread} from "../../../api/Youtube_API/Types_Youtube_API/Comments_Types";
+} from "../../../api/Youtube_API/Types_Youtube_API/Videos_Types"
 import {
     Channels_Types,
     ChannelSnippet,
     ChannelStatistics
-} from "../../../api/Youtube_API/Types_Youtube_API/Channels_Types";
-import {UserVideoRating} from "../../../api/Youtube_API/Types_Youtube_API/Auth_Requests_Types";
-import {YoutubeChannelsAPI} from "../../../api/Youtube_API/Channels";
-import {YoutubeAPIComments} from "../../../api/Youtube_API/Commenst";
-import {YoutubeAPIVideoInteraction} from "../../../api/Youtube_API/Video_Interaction";
+} from "../../../api/Youtube_API/Types_Youtube_API/Channels_Types"
+import {UserVideoRating} from "../../../api/Youtube_API/Types_Youtube_API/Auth_Requests_Types"
+import {YoutubeChannelsAPI} from "../../../api/Youtube_API/Channels"
+import {YoutubeAPIComments} from "../../../api/Youtube_API/Commenst"
+import {YoutubeAPIVideoInteraction} from "../../../api/Youtube_API/Video_Interaction"
+import {createComments, setNewAnswersInComment} from "./VideoReducers_ObjectHelpers"
 
 
 let initialState = {
@@ -34,20 +35,20 @@ let initialState = {
         comments: [] as Array<CommentType>,
         nextPageCommentsToken: null as string | null,
     },
-    videoAbuse:{
-        videoAbuseReasons:null as null| Array<VideoAbuseReportReason>,
+    videoAbuse: {
+        videoAbuseReasons: null as null | Array<VideoAbuseReportReason>,
         status: null as Status,
-        error:null as string|null
+        error: null as string | null
     }
 }
-type Status =  null| 'loading'|'completed'|'loadingReasonsList'|'errorLoadingList'|'errorAbuseVideo'
+type Status = null | 'loading' | 'completed' | 'loadingReasonsList' | 'errorLoadingList' | 'errorAbuseVideo'
 export type VideoAbuseReportReason = {
     id: string
     label: string
     secondaryReasons: Array<{
         id: string
         label: string
-    }>|null
+    }> | null
 }
 type InitialStateType = typeof initialState
 
@@ -76,25 +77,17 @@ const currentVideoReducer = (state = initialState, action: Actions): InitialStat
                 relatedVideoDetails: action.payload.videoDetails
             }
         case 'YOUTUBE/SET_COMMENTS':
-            if (action.payload.isNewVideo) {
                 return {
                     ...state,
                     commentsDetails: {
                         commentsStatus: null,
                         nextPageCommentsToken: action.payload.nextPageToken,
-                        comments: action.payload.comments
-                    },
-                }
-            } else {
-                return {
-                    ...state,
-                    commentsDetails: {
-                        commentsStatus: null,
-                        nextPageCommentsToken: action.payload.nextPageToken,
-                        comments: state.commentsDetails.comments.concat(action.payload.comments)
+                        comments: action.payload.isNewVideo ?
+                            action.payload.comments
+                            :
+                            state.commentsDetails.comments.concat(action.payload.comments)
                     }
                 }
-            }
         case 'YOUTUBE/SET_COMMENTS_STATUS':
             if (action.payload.status === 'commentsDisabled') {
                 return {
@@ -116,6 +109,15 @@ const currentVideoReducer = (state = initialState, action: Actions): InitialStat
 
                 }
             }
+        case 'YOUTUBE/SET_ANSWERS':
+            return {
+                ...state,
+                commentsDetails: {...state.commentsDetails,
+                    comments: setNewAnswersInComment(
+                        state.commentsDetails.comments,action.answers,action.parentId,action.pageToken
+                    )
+                }
+            }
         case
         'YOUTUBE/SET_CHANNEL_DETAILS' :
             return {
@@ -128,7 +130,7 @@ const currentVideoReducer = (state = initialState, action: Actions): InitialStat
                 ...state,
                 userRating: action.payload
             }
-            case
+        case
         'YOUTUBE/SET_VIDEO_ABUSE_STATUS' :
             return {
                 ...state,
@@ -137,8 +139,8 @@ const currentVideoReducer = (state = initialState, action: Actions): InitialStat
                     status: action.payload
                 }
             }
-            case
-            'YOUTUBE/SET_VIDEO_ABUSE_REPORT_REASONS' :
+        case
+        'YOUTUBE/SET_VIDEO_ABUSE_REPORT_REASONS' :
             return {
                 ...state,
                 videoAbuse: {
@@ -180,8 +182,11 @@ export const actionsCurrentVideo = {
     setRelatedVideos: (videoDetails: Array<PreviewVideo>) => ({
         type: 'YOUTUBE/SET_RELATED_VIDEOS', payload: {videoDetails}
     } as const),
-    setComments: (comments: Array<CommentType>, isNewVideo: boolean, nextPageToken: string | null, totalCount: number) => ({
-        type: 'YOUTUBE/SET_COMMENTS', payload: {comments, isNewVideo, nextPageToken, totalCount}
+    setComments: (comments: Array<CommentType>, isNewVideo: boolean, nextPageToken: string | null) => ({
+        type: 'YOUTUBE/SET_COMMENTS', payload: {comments, isNewVideo, nextPageToken}
+    } as const),
+    setAnswers: (answers: Array<CommentAnswerType>, parentId: string, pageToken?: string | null) => ({
+        type: 'YOUTUBE/SET_ANSWERS', answers,parentId, pageToken
     } as const),
     setCommentsStatus: (status: null | string) => ({
         type: 'YOUTUBE/SET_COMMENTS_STATUS', payload: {status}
@@ -201,42 +206,10 @@ export const getVideoComments = (
     dispatch) => {
     try {
         dispatch(actionsCurrentVideo.setCommentsStatus('loading'))
-        const data: CommentThread = await YoutubeAPIComments.getVideoComments(videoId, pageToken, order)
-        const comments:Array<CommentType> = data.items.map((c) => {
-            const {
-                authorChannelId,
-                authorDisplayName,
-                authorProfileImageUrl,
-                textDisplay,
-                likeCount,
-                publishedAt,
-            } = c.snippet.topLevelComment.snippet
-            return {
-                commentId: c.snippet.topLevelComment.id,
-                authorChannelId: authorChannelId.value,
-                authorDisplayName: authorDisplayName,
-                authorProfileImageUrl: authorProfileImageUrl,
-                likeCount: likeCount,
-                publishedAt: publishedAt,
-                text: textDisplay,
-                totalReplyCount: c.snippet.totalReplyCount,
-                videoId: c.snippet.videoId,
-                answers:[{
-                    text:'asdasd',
-                    publishedAt:'asdasdasd',
-                    likeCount: 153,
-                    authorDisplayName:'Dimasta',
-                    authorProfileImageUrl:'aaa',
-                    commentId:'1233',
-                    authorChannelId:'asd'
-                }],
-                answersNextPageToken:null,
-                isLoadingAnswers:false
-            }
-        })
+        const {items,nextPageToken} = await YoutubeAPIComments.getVideoComments(videoId, pageToken, order)
+        const comments = createComments(items)
         const isNewVideo = !pageToken
-        const nextPageToken = data.nextPageToken || null
-        dispatch(actionsCurrentVideo.setComments(comments, isNewVideo, nextPageToken, data.pageInfo.totalResults))
+        dispatch(actionsCurrentVideo.setComments(comments, isNewVideo, nextPageToken||null))
     } catch (error) {
         alert('ErrorNotification Comments')
     } finally {
@@ -245,36 +218,66 @@ export const getVideoComments = (
 
 }
 
+export const insertComment=(videoId:string,channelId:string,text:string,accessToken:string):ThunkType=> async (dispatch)=>{
+   try{
+       dispatch(actionsCurrentVideo.setCommentsStatus('loadingInsertComment'))
+       const item= await YoutubeAPIComments.insertComment(videoId,channelId,text,accessToken)
+       const comment = createComments([item])
+       dispatch(actionsCurrentVideo.setComments(comment,false, null))
+   }
+   catch (error){
+       alert('error InsertComment')
+   }
+   finally {
+       dispatch(actionsCurrentVideo.setCommentsStatus('commentInsert'))
+   }
+}
+export const insertAnswer=(parentId:string,text:string,accessToken:string):ThunkType=> async (dispatch)=>{
+    try{
+        dispatch(actionsCurrentVideo.setCommentsStatus('loadingInsertAnswer'))
+        const {snippet,id}= await YoutubeAPIComments.insertAnswer(parentId,text,accessToken)
+        const {authorChannelId,authorDisplayName,authorProfileImageUrl,likeCount,publishedAt,textDisplay}=snippet
+        const answer = [{commentId: id,
+            authorChannelId: authorChannelId.value,
+            authorDisplayName, authorProfileImageUrl, likeCount, publishedAt,
+            text: textDisplay}]
+        dispatch(actionsCurrentVideo.setAnswers(answer,parentId))
+    }
+    catch (error){
+        alert('error InsertAnswer')
+    }
+    finally {
+        dispatch(actionsCurrentVideo.setCommentsStatus('answerInsert'))
+    }
+}
+export const markCommentAsSpam=(commentId:string,accessToken:string):ThunkType=>async (dispatch)=>{
+    dispatch(actionsCurrentVideo.setCommentsStatus('loadingAbuseComment'))
+    const status = await YoutubeAPIComments.markAsSpam(commentId,accessToken)
+    if(status === 204){
+        dispatch(actionsCurrentVideo.setCommentsStatus('abuseCommentCompleted'))
+    }
+    else{
+        dispatch(actionsCurrentVideo.setCommentsStatus('abuseCommentError'))
+    }
+
+}
+
+
+
 export const getCommentAnswers = (commentId: string, nextPageAnswersToken = null as string | null): ThunkType => async (dispatch) => {
     try {
         dispatch(actionsCurrentVideo.setIsLoadingAnswers(commentId))
-        const data: CommentAnswersThread = await YoutubeAPIComments.getCommentAnswers(commentId, nextPageAnswersToken)
-        const answersDetails = data.items.map((c) => {
-            const {
-                authorChannelId,
-                authorDisplayName,
-                authorProfileImageUrl,
-                textDisplay,
-                likeCount,
-                publishedAt
-            } = c.snippet
+        const {items,nextPageToken} = await YoutubeAPIComments.getCommentAnswers(commentId, nextPageAnswersToken)
+        const answers:Array<CommentAnswerType> = items.map(({id,snippet}) => {
+            const {authorChannelId, authorDisplayName, authorProfileImageUrl, textDisplay, likeCount, publishedAt} = snippet
             return {
-                commentId: c.id,
+                commentId: id,
                 authorChannelId: authorChannelId.value,
-                authorDisplayName: authorDisplayName,
-                authorProfileImageUrl: authorProfileImageUrl,
-                likeCount: likeCount,
-                publishedAt: publishedAt,
+                authorDisplayName, authorProfileImageUrl, likeCount, publishedAt,
                 text: textDisplay,
             }
-
         })
-        const answers = {
-            parentId: data.items[0].snippet.parentId,
-            nextPageToken: data.nextPageToken ? data.nextPageToken : null,
-            answersArray: answersDetails
-        }
-       // dispatch(actionsCurrentVideo.setCommentAnswers(answers))
+        dispatch(actionsCurrentVideo.setAnswers(answers,commentId,nextPageToken||null))
     } catch (error) {
         alert('error Load Answers')
     } finally {
@@ -342,13 +345,13 @@ export const setCurrentVideo = (videoId: string, access_token: string | null = n
 
         //-----Общие детали выбранного видео
         const dataCurrentVideo: VideosListResponse = await YoutubeAPIVideosList.getVideosById(videoId)
-        const {snippet, statistics, status,id} = dataCurrentVideo.items[0]
-        const{title,description, publishedAt,tags}=snippet
-        const currentVideo = {videoId:id, title, description, publishedAt, tags}
+        const {snippet, statistics, status, id} = dataCurrentVideo.items[0]
+        const {title, description, publishedAt, tags} = snippet
+        const currentVideo = {videoId: id, title, description, publishedAt, tags}
         dispatch(actionsCurrentVideo.setCurrentVideo(currentVideo))
 
         //----Статистика выбранного видео
-        const{dislikeCount,favoriteCount,likeCount,viewCount,commentCount}=statistics
+        const {dislikeCount, favoriteCount, likeCount, viewCount, commentCount} = statistics
         const statisticsCurrentVideo = {commentCount, likeCount, dislikeCount, favoriteCount, viewCount}
         dispatch(actionsCurrentVideo.setStatistics(statisticsCurrentVideo))
 
@@ -383,7 +386,7 @@ export const setCurrentVideo = (videoId: string, access_token: string | null = n
         }
 
 
-    } catch (error: any) {
+    } catch (error) {
         let e = error as any
         dispatch(actionsCurrentVideo.setError({
             code: e.response.code,
@@ -392,7 +395,6 @@ export const setCurrentVideo = (videoId: string, access_token: string | null = n
     } finally {
         dispatch(actionsCurrentVideo.setIsLoading(false))
     }
-
 }
 
 
@@ -412,15 +414,17 @@ export const setUserRating = (videoId: string, rating: 'none' | 'like' | 'dislik
     }
 }
 
-export const getAbuseReasonList = (access_token: string): ThunkType => async (dispatch) => {
+export const getAbuseReasonList = (access_token: string): ThunkType => async (
+    dispatch
+) => {
     try {
         dispatch(actionsCurrentVideo.setAbuseStatus('loadingReasonsList'))
         const data = await YoutubeAPIVideoInteraction.reportAbuseList(access_token)
-        const abuseReasons = data.items.map(({id,snippet}) => {
+        const abuseReasons = data.items.map(({id, snippet}) => {
             return {
                 id,
-                label:snippet.label,
-                secondaryReasons:snippet.secondaryReasons ?  snippet.secondaryReasons.map(s => {
+                label: snippet.label,
+                secondaryReasons: snippet.secondaryReasons ? snippet.secondaryReasons.map(s => {
                     return {
                         id: s.id,
                         label: s.label
@@ -430,16 +434,17 @@ export const getAbuseReasonList = (access_token: string): ThunkType => async (di
         })
         dispatch(actionsCurrentVideo.setAbuseListReasons(abuseReasons))
         dispatch(actionsCurrentVideo.setAbuseStatus(null))
-    } catch (error:any) {
+    } catch (error: any) {
         console.log(error.toJSON)
     }
 }
+
 export const reportAbuseVideo = (
-    access_token: string,videoId: string, reasonId: string,secondaryReasonId:null|string,comments:string|null
+    access_token: string, videoId: string, reasonId: string, secondaryReasonId: null | string, comments: string | null
 ): ThunkType => async (dispatch) => {
     dispatch(actionsCurrentVideo.setAbuseStatus('loading'))
-    const status = await YoutubeAPIVideoInteraction.reportAbuseVideo(access_token,videoId,reasonId,secondaryReasonId,comments)
-    if(status === 204){
+    const status = await YoutubeAPIVideoInteraction.reportAbuseVideo(access_token, videoId, reasonId, secondaryReasonId, comments)
+    if (status === 204) {
         dispatch(actionsCurrentVideo.setAbuseStatus('completed'))
     }
 }

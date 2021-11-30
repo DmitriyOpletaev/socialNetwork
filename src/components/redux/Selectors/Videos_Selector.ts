@@ -1,7 +1,7 @@
 import {AppStateType} from "../redux-store";
 
 
-export const videoMainSelector={
+export const MainVideoSelector={
     userChannel:({videoMainReducer}:AppStateType)=>videoMainReducer.userChannel,
     subscriptionsChannels:({videoMainReducer}:AppStateType)=>videoMainReducer.subscriptionsChannels,
     openedModalWindow:({videoMainReducer}:AppStateType)=>videoMainReducer.openedModalWindow,
@@ -25,7 +25,45 @@ export const CurrentVideoSelector={
     errorCurrentVideo:({currentVideo}:AppStateType)=>currentVideo.error,
     videoComments:({currentVideo}:AppStateType)=>currentVideo.commentsDetails,
 }
+export const CurrentChannelSelector={
+    isLoading:({currentChannel}:AppStateType)=>currentChannel.isLoading,
+    error:({currentChannel}:AppStateType)=>currentChannel.error,
+    channelInfo:({currentChannel}:AppStateType)=>currentChannel.channelInfo,
+    multipleChannels:({currentChannel}:AppStateType)=>currentChannel.multipleChannels,
+    mainPagePlaylists:({currentChannel}:AppStateType)=>currentChannel.mainPagePlaylists,
+    allPlaylists:({currentChannel}:AppStateType)=>currentChannel.allPlaylists,
+    allVideos:({currentChannel}:AppStateType)=>currentChannel.allVideos,
+}
+//------------Current Channel
+export function getIsLoadingCurrentChannelSelector(state:AppStateType){
+    return state.currentChannel.isLoading
+}
+export function getErrorCurrentChannelSelector(state:AppStateType){
+    return state.currentChannel.error
+}
+export function getCurrentChannelInfoSelector(state:AppStateType){
+    return state.currentChannel.channelInfo
+}
+export function getMultipleChannelsSelector(state:AppStateType){
+    return state.currentChannel.multipleChannels
+}
+export function getMainPagePlaylistsSelector(state:AppStateType){
+    return state.currentChannel.mainPagePlaylists
+}
+export function getAllChannelPlaylistsSelector(state:AppStateType){
+    return state.currentChannel.allPlaylists
+}
+export function getAllChannelVideos(state:AppStateType){
+    return state.currentChannel.allVideos
+}
 
+
+
+
+
+
+
+//-------------
 export function getCurrentVideo(state:AppStateType){
     return state.currentVideo.currentVideo
 }
@@ -52,26 +90,4 @@ export function getVideoCommentsSelector(state:AppStateType){
 }
 
 
-//------------Current Channel
-export function getIsLoadingCurrentChannelSelector(state:AppStateType){
-    return state.currentChannel.isLoading
-}
-export function getErrorCurrentChannelSelector(state:AppStateType){
-    return state.currentChannel.error
-}
-export function getCurrentChannelInfoSelector(state:AppStateType){
-    return state.currentChannel.channelInfo
-}
-export function getMultipleChannelsSelector(state:AppStateType){
-    return state.currentChannel.multipleChannels
-}
-export function getMainPagePlaylistsSelector(state:AppStateType){
-    return state.currentChannel.mainPagePlaylists
-}
-export function getAllChannelPlaylistsSelector(state:AppStateType){
-    return state.currentChannel.allPlaylists
-}
 
-export function getAllChannelVideos(state:AppStateType){
-    return state.currentChannel.allVideos
-}

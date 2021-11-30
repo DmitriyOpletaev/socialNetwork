@@ -12,7 +12,7 @@ import Preloader from "../../common/preloader/preloader";
 const config = {
     youtube:{
         playerVars:{
-            autoplay: 1,
+            autoplay: 0,
         }
     }
 }
@@ -27,7 +27,7 @@ export const VideoPopup = () => {
     return (
         <div className={m.current_video_container}>
             <div className={m.player_container}>
-                <ReactPlayer className={m.videosElement} width='100%' height='100%' controls autoPlay={true}
+                <ReactPlayer className={m.videosElement} width='100%' height='100%' controls
                              config={config}
                              url={`https://www.youtube.com/watch?v=${currentVideo.videoId}`}
                 />

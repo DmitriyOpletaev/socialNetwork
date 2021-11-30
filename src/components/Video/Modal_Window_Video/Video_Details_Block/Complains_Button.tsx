@@ -132,7 +132,7 @@ const SecondaryReasons: FC<SecondaryReasonsProps> = ({secondaryReasons, selectSe
 const MoreInformationInput: FC<MoreInformationInputProps> = ({setComment}) => {
 
     const{openErrorNotification}=useErrorNotification({
-        errorDescription:'Oshibo4ka'
+        errorDescription:'Произошла ошибка'
     })
 
     return (

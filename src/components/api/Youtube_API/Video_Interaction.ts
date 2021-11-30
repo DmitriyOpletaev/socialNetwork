@@ -1,9 +1,6 @@
 import {credentials, instanceYoutube} from "./API";
-import {GetRatingResponse} from "./Types_Youtube_API/Auth_Requests_Types";
-import {VideoAbuseReportReasonListResponse} from "./Types_Youtube_API/Video_Interaction_Types";
-import {Simulate} from "react-dom/test-utils";
-import {YoutubeResponseError} from "./Types_Youtube_API/Errors";
-
+import {GetRatingResponse} from "./Types_Youtube_API/Auth_Requests_Types"
+import {VideoAbuseReportReasonListResponse} from "./Types_Youtube_API/Video_Interaction_Types"
 
 export const YoutubeAPIVideoInteraction = {
     getUserRating(videoId: string | Array<string>, access_token: string) {
@@ -44,8 +41,6 @@ export const YoutubeAPIVideoInteraction = {
         }
         return instanceYoutube(access_token).post<number>(`videos/reportAbuse?`, data).then(
             response => response.status
-        ).catch(function (error){
-          return error.error
-        })
+        )
     },
 }

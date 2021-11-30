@@ -11,7 +11,7 @@ import {TooltipPlacement} from "antd/es/tooltip";
 
 export const useGoogleUnauthorizedPopover = (
     wrappedComponent: JSX.Element,
-    someFunction: () => void,
+    someFunction: () => void=()=>{},
     placement:TooltipPlacement='bottom',
     text: string = 'Вы не авторизованы !'
 

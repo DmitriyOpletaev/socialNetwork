@@ -22,7 +22,7 @@ import {
 } from "../../redux/Reducers/Video_Page_Reducers/videoMainReducer";
 import {useVideo} from "../Video_Components/useVideo";
 import {useSearchVideos} from "../Video_Components/useSearchVideos";
-import {SearchVideosSelector, videoMainSelector} from "../../redux/Selectors/Videos_Selector";
+import {SearchVideosSelector, MainVideoSelector} from "../../redux/Selectors/Videos_Selector";
 import {getAccessToken} from "../../redux/Reducers/Auth-Reducer";
 import {GoogleLoginButton} from "../../common/Google_Login/Google_Login_Button";
 
@@ -45,7 +45,7 @@ const menuItems = [
 export function VideosPageMenu() {
     const dispatch = useDispatch()
     const {accessToken, openChannel} = useVideo()
-    const userChannel = useSelector(videoMainSelector.userChannel)
+    const userChannel = useSelector(MainVideoSelector.userChannel)
     const {searchCategory} = useSearchVideos()
     const {categoryId} = useSelector(SearchVideosSelector.searchDetails)
     useEffect(() => {
@@ -128,7 +128,7 @@ function SubscribersChannelsBlock() {
 
 function UserChannelMenuItem() {
     const accessToken = useSelector(getAccessToken)
-    const userChannel = useSelector(videoMainSelector.userChannel)
+    const userChannel = useSelector(MainVideoSelector.userChannel)
     const {openChannel} = useVideo()
     if(!accessToken){
         return (

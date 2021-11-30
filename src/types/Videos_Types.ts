@@ -31,7 +31,7 @@ export  interface CommentType {
     totalReplyCount:number
     answersNextPageToken:string|null
     isLoadingAnswers:boolean
-    answers:Array<CommentAnswerType>|[]
+    answers:Array<CommentAnswerType>|null
 }
 export interface CommentAnswerType{
     commentId:string

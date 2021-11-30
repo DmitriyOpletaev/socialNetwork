@@ -1,34 +1,33 @@
-import React, {FC, useEffect, useMemo, useState} from "react";
+import React, {FC, useMemo, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    CurrentVideoSelector,
-    getCurrentVideoChannel, getCurrentVideoStatistics,
-} from "../../../redux/Selectors/Videos_Selector";
+import {CurrentVideoSelector} from "../../../redux/Selectors/Videos_Selector";
 import {getVideoComments} from "../../../redux/Reducers/Video_Page_Reducers/Current_Video_Reducer";
-import {Button, Dropdown, Menu} from "antd";
+import {Button} from "antd";
 import m from "../Modal_Window_Styles.module.scss";
 import {DownCircleOutlined} from "@ant-design/icons";
 import catGif from '../../../../assets/images/sleepCat.gif'
 import {VideoComment} from "./Comment";
 import {CommentsSortedButton} from "./Sorted_Button";
+import {CommentInput} from "./Comment_Input";
 
 
 interface VideoComments {
     currentVideoId: string
 }
-
 export const CommentsBlock: FC<VideoComments> = ({currentVideoId}) => {
     const dispatch = useDispatch()
-    const {channelId} = useSelector(getCurrentVideoChannel)
+    const {channelId} = useSelector(CurrentVideoSelector.channel)
     const {comments, nextPageCommentsToken, commentsStatus} = useSelector(CurrentVideoSelector.videoComments)
     const [currentSorting, setCurrentSorting] = useState('relevance' as 'relevance' | 'time')
+
     function moreComments() {
         dispatch(getVideoComments(currentVideoId, nextPageCommentsToken, currentSorting))
     }
+
     const Comments = useMemo(() => {
         return comments.map(comment => (
             <VideoComment comment={comment} channelId={channelId} key={comment.commentId}/>))
-    }, [comments])
+    }, [comments, channelId])
     const {commentCount} = useSelector(CurrentVideoSelector.videoStatistics)
 
     if (commentsStatus === 'commentsDisabled') return <CommentsDisabled/>
@@ -36,8 +35,10 @@ export const CommentsBlock: FC<VideoComments> = ({currentVideoId}) => {
     return (
         <div className={m.comments_wrapper}>
             {commentCount} комментариев
+
             <CommentsSortedButton currentVideoId={currentVideoId} currentSorting={currentSorting}
                                   setCurrentSorting={setCurrentSorting}/>
+            <CommentInput videoId={currentVideoId}/>
             {Comments}
             {nextPageCommentsToken &&
             <div className={m.more_comments_button_container}>
@@ -50,8 +51,8 @@ export const CommentsBlock: FC<VideoComments> = ({currentVideoId}) => {
     )
 }
 
-function CommentsDisabled(){
-    return(
+function CommentsDisabled() {
+    return (
         <div>
             <img alt='' style={{width: '20%', transform: 'translate(192.5px,13px)', userSelect: 'none'}} src={catGif}/>
             <div>
