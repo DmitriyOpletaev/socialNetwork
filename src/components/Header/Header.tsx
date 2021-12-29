@@ -44,6 +44,3 @@ export const MyHeader: FC<Props> = () => {
         </article>
     )
 }
-
-
-//  <GoogleOutlined style={{fontSize:'22px'}}/>

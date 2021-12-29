@@ -71,5 +71,13 @@ export const YoutubeAPIComments = {
             'comments/markAsSpam',{}, {params}
         ).then(res => res.status)
     },
+    deleteComment(commentId:string,accessToken:string){
+        const params={
+            id: commentId
+        }
+        return instanceYoutube(accessToken).delete<number>(
+            'comments', {params}
+        ).then(res=>res.status)
+    }
 
 }

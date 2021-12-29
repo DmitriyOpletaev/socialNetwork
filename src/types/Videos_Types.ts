@@ -28,7 +28,7 @@ export  interface CommentType {
     likeCount:number
     publishedAt:string
     text:string
-    totalReplyCount:number
+    totalReplyCount:number  //кол-во ответов на комментарий
     answersNextPageToken:string|null
     isLoadingAnswers:boolean
     answers:Array<CommentAnswerType>|null

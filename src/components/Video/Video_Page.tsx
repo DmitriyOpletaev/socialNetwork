@@ -9,7 +9,6 @@ import {VideosPageMenu} from "./Menu/Menu";
 
 export const VideoPage = () => {
     const {openedModalWindow, closeWindow} = useVideo()
-
     return (
         <div className={m.body_videos_page}>
             <div className={m.searchBar_and_content_wrapper}>
@@ -23,7 +22,6 @@ export const VideoPage = () => {
 
             </div>
             <VideosPageMenu/>
-
             {openedModalWindow &&
             <Modal className={m.modal_window}
                    width={1100} centered
@@ -36,7 +34,6 @@ export const VideoPage = () => {
                 </div>
             </Modal>
             }
-
         </div>
     )
 }

@@ -86,7 +86,8 @@ export const YoutubeAPIVideosList = {
             part: 'snippet',
             maxResults: 25,
             channelId,
-            pageToken
+            pageToken,
+            order:'date'
         }
         return instanceYoutube().get<VideosIdListBySearchResponse<SearchSnippet>>('search?', {params}).then(
             response => response.data

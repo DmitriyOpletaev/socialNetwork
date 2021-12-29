@@ -19,7 +19,7 @@ import {UserVideoRating} from "../../../api/Youtube_API/Types_Youtube_API/Auth_R
 import {YoutubeChannelsAPI} from "../../../api/Youtube_API/Channels"
 import {YoutubeAPIComments} from "../../../api/Youtube_API/Commenst"
 import {YoutubeAPIVideoInteraction} from "../../../api/Youtube_API/Video_Interaction"
-import {createComments, setNewAnswersInComment} from "./VideoReducers_ObjectHelpers"
+import {createComments, setNewAnswersInComment, deleteCommentHelper} from "./VideoReducers_ObjectHelpers"
 
 
 let initialState = {
@@ -77,17 +77,17 @@ const currentVideoReducer = (state = initialState, action: Actions): InitialStat
                 relatedVideoDetails: action.payload.videoDetails
             }
         case 'YOUTUBE/SET_COMMENTS':
-                return {
-                    ...state,
-                    commentsDetails: {
-                        commentsStatus: null,
-                        nextPageCommentsToken: action.payload.nextPageToken,
-                        comments: action.payload.isNewVideo ?
-                            action.payload.comments
-                            :
-                            state.commentsDetails.comments.concat(action.payload.comments)
-                    }
+            return {
+                ...state,
+                commentsDetails: {
+                    commentsStatus: null,
+                    nextPageCommentsToken: action.payload.nextPageToken,
+                    comments: action.payload.isNewVideo ?
+                        action.payload.comments
+                        :
+                        state.commentsDetails.comments.concat(action.payload.comments)
                 }
+            }
         case 'YOUTUBE/SET_COMMENTS_STATUS':
             if (action.payload.status === 'commentsDisabled') {
                 return {
@@ -112,10 +112,23 @@ const currentVideoReducer = (state = initialState, action: Actions): InitialStat
         case 'YOUTUBE/SET_ANSWERS':
             return {
                 ...state,
-                commentsDetails: {...state.commentsDetails,
+                commentsDetails: {
+                    ...state.commentsDetails,
                     comments: setNewAnswersInComment(
-                        state.commentsDetails.comments,action.answers,action.parentId,action.pageToken
+                        state.commentsDetails.comments,
+                        action.answers,
+                        action.parentId,
+                        action.pageToken
                     )
+                }
+            }
+        case 'YOUTUBE/DELETE_COMMENT':
+
+            return {
+                ...state,
+                commentsDetails: {
+                    ...state.commentsDetails,
+                    comments: deleteCommentHelper(state.commentsDetails.comments, action.payload)
                 }
             }
         case
@@ -185,8 +198,12 @@ export const actionsCurrentVideo = {
     setComments: (comments: Array<CommentType>, isNewVideo: boolean, nextPageToken: string | null) => ({
         type: 'YOUTUBE/SET_COMMENTS', payload: {comments, isNewVideo, nextPageToken}
     } as const),
+    deleteComment: (commentId: string) => ({
+        type: 'YOUTUBE/DELETE_COMMENT',
+        payload: commentId
+    } as const),
     setAnswers: (answers: Array<CommentAnswerType>, parentId: string, pageToken?: string | null) => ({
-        type: 'YOUTUBE/SET_ANSWERS', answers,parentId, pageToken
+        type: 'YOUTUBE/SET_ANSWERS', answers, parentId, pageToken
     } as const),
     setCommentsStatus: (status: null | string) => ({
         type: 'YOUTUBE/SET_COMMENTS_STATUS', payload: {status}
@@ -206,10 +223,10 @@ export const getVideoComments = (
     dispatch) => {
     try {
         dispatch(actionsCurrentVideo.setCommentsStatus('loading'))
-        const {items,nextPageToken} = await YoutubeAPIComments.getVideoComments(videoId, pageToken, order)
+        const {items, nextPageToken} = await YoutubeAPIComments.getVideoComments(videoId, pageToken, order)
         const comments = createComments(items)
         const isNewVideo = !pageToken
-        dispatch(actionsCurrentVideo.setComments(comments, isNewVideo, nextPageToken||null))
+        dispatch(actionsCurrentVideo.setComments(comments, isNewVideo, nextPageToken || null))
     } catch (error) {
         alert('ErrorNotification Comments')
     } finally {
@@ -218,58 +235,69 @@ export const getVideoComments = (
 
 }
 
-export const insertComment=(videoId:string,channelId:string,text:string,accessToken:string):ThunkType=> async (dispatch)=>{
-   try{
-       dispatch(actionsCurrentVideo.setCommentsStatus('loadingInsertComment'))
-       const item= await YoutubeAPIComments.insertComment(videoId,channelId,text,accessToken)
-       const comment = createComments([item])
-       dispatch(actionsCurrentVideo.setComments(comment,false, null))
-   }
-   catch (error){
-       alert('error InsertComment')
-   }
-   finally {
-       dispatch(actionsCurrentVideo.setCommentsStatus('commentInsert'))
-   }
+export const insertComment = (videoId: string, channelId: string, text: string, accessToken: string): ThunkType => async (dispatch) => {
+    try {
+        dispatch(actionsCurrentVideo.setCommentsStatus('loadingInsertComment'))
+        const item = await YoutubeAPIComments.insertComment(videoId, channelId, text, accessToken)
+        const comment = createComments([item])
+        dispatch(actionsCurrentVideo.setComments(comment, false, null))
+    } catch (error) {
+        alert('error InsertComment')
+    } finally {
+        dispatch(actionsCurrentVideo.setCommentsStatus('commentInsert'))
+    }
 }
-export const insertAnswer=(parentId:string,text:string,accessToken:string):ThunkType=> async (dispatch)=>{
-    try{
+export const insertAnswer = (parentId: string, text: string, accessToken: string): ThunkType => async (dispatch) => {
+    try {
         dispatch(actionsCurrentVideo.setCommentsStatus('loadingInsertAnswer'))
-        const {snippet,id}= await YoutubeAPIComments.insertAnswer(parentId,text,accessToken)
-        const {authorChannelId,authorDisplayName,authorProfileImageUrl,likeCount,publishedAt,textDisplay}=snippet
-        const answer = [{commentId: id,
+        const {snippet, id} = await YoutubeAPIComments.insertAnswer(parentId, text, accessToken)
+        const {authorChannelId, authorDisplayName, authorProfileImageUrl, likeCount, publishedAt, textDisplay} = snippet
+        const answer = [{
+            commentId: id,
             authorChannelId: authorChannelId.value,
             authorDisplayName, authorProfileImageUrl, likeCount, publishedAt,
-            text: textDisplay}]
-        dispatch(actionsCurrentVideo.setAnswers(answer,parentId))
-    }
-    catch (error){
+            text: textDisplay
+        }]
+        dispatch(actionsCurrentVideo.setAnswers(answer, parentId))
+    } catch (error) {
         alert('error InsertAnswer')
-    }
-    finally {
+    } finally {
         dispatch(actionsCurrentVideo.setCommentsStatus('answerInsert'))
     }
 }
-export const markCommentAsSpam=(commentId:string,accessToken:string):ThunkType=>async (dispatch)=>{
+export const markCommentAsSpam = (commentId: string, accessToken: string): ThunkType => async (dispatch) => {
     dispatch(actionsCurrentVideo.setCommentsStatus('loadingAbuseComment'))
-    const status = await YoutubeAPIComments.markAsSpam(commentId,accessToken)
-    if(status === 204){
+    const status = await YoutubeAPIComments.markAsSpam(commentId, accessToken)
+    if (status === 204) {
         dispatch(actionsCurrentVideo.setCommentsStatus('abuseCommentCompleted'))
-    }
-    else{
+    } else {
         dispatch(actionsCurrentVideo.setCommentsStatus('abuseCommentError'))
     }
-
 }
 
+export const deleteComment = (commentId: string, accessToken: string): ThunkType => async (dispatch) => {
+    const data = await YoutubeAPIComments.deleteComment(commentId, accessToken)
+    if (data === 204) {
+        dispatch(actionsCurrentVideo.deleteComment(commentId))
+    } else {
+        alert('Error -- ' + data)
+    }
+}
 
 
 export const getCommentAnswers = (commentId: string, nextPageAnswersToken = null as string | null): ThunkType => async (dispatch) => {
     try {
         dispatch(actionsCurrentVideo.setIsLoadingAnswers(commentId))
-        const {items,nextPageToken} = await YoutubeAPIComments.getCommentAnswers(commentId, nextPageAnswersToken)
-        const answers:Array<CommentAnswerType> = items.map(({id,snippet}) => {
-            const {authorChannelId, authorDisplayName, authorProfileImageUrl, textDisplay, likeCount, publishedAt} = snippet
+        const {items, nextPageToken} = await YoutubeAPIComments.getCommentAnswers(commentId, nextPageAnswersToken)
+        const answers: Array<CommentAnswerType> = items.map(({id, snippet}) => {
+            const {
+                authorChannelId,
+                authorDisplayName,
+                authorProfileImageUrl,
+                textDisplay,
+                likeCount,
+                publishedAt
+            } = snippet
             return {
                 commentId: id,
                 authorChannelId: authorChannelId.value,
@@ -277,7 +305,7 @@ export const getCommentAnswers = (commentId: string, nextPageAnswersToken = null
                 text: textDisplay,
             }
         })
-        dispatch(actionsCurrentVideo.setAnswers(answers,commentId,nextPageToken||null))
+        dispatch(actionsCurrentVideo.setAnswers(answers, commentId, nextPageToken || null))
     } catch (error) {
         alert('error Load Answers')
     } finally {

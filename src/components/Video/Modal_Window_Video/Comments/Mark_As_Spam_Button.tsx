@@ -45,13 +45,14 @@ export const MarkAsSpamButton: FC<MarkAsSpamButtonProps> = ({commentId}) => {
         <div className={m.spam_button}>
             {accessToken ?
                 <Popconfirm okButtonProps={okButtonProps}
+                            okText='Пожаловаться'
+                            cancelText='Отмена'
                             title={<span>Отметить комментарий как спам?</span>}>
                     {videoReportAbuseButton}
                 </Popconfirm>
                 :
                 videoReportAbuseButton
             }
-
         </div>
     )
 }

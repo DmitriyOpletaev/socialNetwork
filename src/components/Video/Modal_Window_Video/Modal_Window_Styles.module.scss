@@ -1,310 +1,377 @@
 $font_size: 15px;
 
 .current_video_container {
-    min-height: 85vh;
-    width: 100%;
+  min-height: 85vh;
+  width: 100%;
 
-    .player_container {
-        height: 533px;
-        width: 90%;
-        margin: 0 auto;
-    }
+  .player_container {
+    height: 533px;
+    width: 90%;
+    margin: 0 auto;
+  }
 
-    .other_information_wrapper {
-        width: 90%;
-        margin: 0 auto;
-        display: flex;
-        font-size: 1.2*$font-size;
-        padding: 5px;
-
-
+  .other_information_wrapper {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    font-size: 1.2*$font-size;
+    padding: 5px;
 
 
-    }
+  }
 }
 
 
 .related_videos_wrapper {
-    width: 350px;
-    .video_container {
-        font-size:0.9*$font-size;
-        margin-bottom: 15px;
-        height: 200px;
-        -webkit-box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
-        -moz-box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
-        box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
-    }
+  width: 350px;
+
+  .video_container {
+    font-size: 0.9*$font-size;
+    margin-bottom: 15px;
+    height: 200px;
+    -webkit-box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
+    box-shadow: 10px 11px 8px 0 rgba(34, 60, 80, 0.2);
+  }
 }
 
 .details_and_comments_wrapper {
-    width: 90%;
-    overflow: hidden;
-    padding-right: 20px;
+  width: 90%;
+  overflow: hidden;
+  padding-right: 20px;
 
-    .title {
-        font-size: 1.4*$font_size;
-        font-weight: 500;
-        color: #1a2e7f;
+  .title {
+    font-size: 1.4*$font_size;
+    font-weight: 500;
+    color: #1a2e7f;
+  }
+
+  .video_statistics {
+    margin: 12px 0;
+    font-size: 0.9em;
+    display: flex;
+    justify-content: space-between;
+
+    .video_count {
+      font-style: italic;
+      font-size: 1.2*$font_size;
     }
-    .video_statistics {
-        margin: 12px 0;
-        font-size: 0.9em;
-        display: flex;
-        justify-content: space-between;
 
-        .video_count {
-            font-style: italic;
-            font-size: 1.2*$font_size;
-        }
-        .margin_symbol{
-            margin: 0 10px;
-            user-select: none;
-            opacity: 0.8;
-        }
-        .publishedAt{
-            font-size: 0.9*$font_size;
+    .margin_symbol {
+      margin: 0 10px;
+      user-select: none;
+      opacity: 0.8;
+    }
 
-        }
-        .rating_and_complains_wrapper{
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            .likes_container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                .like, .dislike {
-                    font-size: 1.2*$font_size;
-                    margin: 0 2px 0 10px ;
-                    user-select: none;
-                    cursor: pointer;
-                    white-space: nowrap;
-                    &.like{
-                        color: #2e7922;
-                    }
-                    &.dislike{
-                        color: red;
-                    }
-                    span{
-                        margin-left: 5px;
-                    }
-                }
-            }
-            .complains_button{
-                font-size: 18px;
-                color: #9a5410;
-                cursor: pointer;
-                margin-left: 10px;
-                transition: transform 0.1s;
-                &:active{
-                    transform: scale(0.9);
-                }
-            }
-
-        }
+    .publishedAt {
+      font-size: 0.9*$font_size;
 
     }
 
-    .channelDetails_container{
+    .rating_and_complains_wrapper {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .likes_container {
         display: flex;
+        justify-content: center;
         align-items: center;
-        .channel_avatar{
-            height: 50px;
-            width: 50px;
-            cursor: pointer;
-        }
-        .channelInformation_container{
-           margin-left: 8px;
-            .channel_title{
-                font-size: 1.1*$font_size;
-                cursor: pointer;
-                font-weight:500;
-            }
-            .channel_subscribersCount{
-                font-size: 0.85*$font_size;
-                font-style: italic;
-            }
-        }
-        .youtube_channel_link{
-            margin-left: 15px;
-            font-size: 2*$font-size;
-            transition: transform 0.5s;
-            a{
-                color: red;
-            }
-            &:active{
-                transform: scale(0.85);
-            }
 
-        }
-        .subscribe_button_container{
-            width: 150px;
-            height: 25px;
-            font-size: 15px;
-            margin-left: 60px;
-        }
+        .like, .dislike {
+          font-size: 1.2*$font_size;
+          margin: 0 2px 0 10px;
+          user-select: none;
+          cursor: pointer;
+          white-space: nowrap;
 
+          &.like {
+            color: #2e7922;
+          }
 
-    }
+          &.dislike {
+            color: red;
+          }
 
-    .description{
-        margin-top: 12px;
-        font-size: $font_size;
-        max-height: 70px;
-        overflow: hidden;
-        &.description_open{
-            max-height: max-content;
+          span {
+            margin-left: 5px;
+          }
         }
-        .tags{
-            margin-top: 25px;
-            font-size: 0.85*$font_size;
-            .tag{
-                margin-right: 7px;
-                color: #8839ad;
-            }
-        }
-    }
-    .more_description_button{
-        margin: 10px 0 30px 0;
-        color: #1a2e7f;
-        font-weight: 400;
-        font-size: 1.7$font_size;
+      }
+
+      .complains_button {
+        font-size: 18px;
+        color: #9a5410;
         cursor: pointer;
-        user-select: none;
-        width: max-content;
+        margin-left: 10px;
+        transition: transform 0.1s;
+
+        &:active {
+          transform: scale(0.9);
+        }
+      }
+
     }
-    .comments_wrapper {
-        width: 98%;
-        padding: 0 13px;
-        -webkit-box-shadow: 1px 1px 12px 7px rgba(34, 60, 80, 0.2) inset;
-        -moz-box-shadow: 1px 1px 12px 7px rgba(34, 60, 80, 0.2) inset;
-        box-shadow: 1px 1px 12px 7px rgba(34, 60, 80, 0.2) inset;
-        .comments_sorted_Button{
-            float: right;
-            margin-top: 5px;
-            color: #2f3185;
-        }
-        .comment_if_user_unauthorized{
-            font-size: 14px;
-            margin-top: 10px;
-            display: flex;
-            justify-content: left;
 
-            span{
-                color: #0033ff;
-            }
-        }
-        .comment_container{
-            position: relative;
-            .name{
-                color: #4a2594;
-                font-size: $font-size;
-                font-weight: 500;
-                &.nameOwner{
-                    color: #5541c2;
-                    background: rgba(0, 0, 0, 0.21);
-                }
-            }
-            .comment_content_wrapper{
-                .comment_rating_wrapper{
-                    cursor: pointer;
-                    user-select: none;
-                    .open_close_answers_buttons_container{
-                            color: blue;
-                    }
-                    .answer_button{
-                        margin-left: 12px;
-                        color: blue;
-                    }
+  }
 
-                }
-            }
-            .spam_button{
-                position: absolute;
-                top:0;
-                right: 15px;
-                user-select: none;
-                cursor: pointer;
-                opacity: 0.2;
-                transition: opacity 0.3s;
-                color: #772f22;
-                &:hover{
-                    opacity: 1;
-                }
-                &:active{
-                    transform: scale(0.95);
-                }
-            }
-            .input_container{
-                position: relative;
-                margin-bottom: 5px;
-                .input_comment{
-                    border:none;
-                    border-bottom: 1px solid rgba(131, 152, 225, 0.47);
-                    padding: 5px 10px;
-                    outline: none;
-                    transition: border-bottom 0s 0.001s;
-                    &:focus{
-                        border-bottom:none;
-                    }
-                }
-                .comment_input_buttons_container{
-                    display: flex;
-                    justify-content: right;
-                    position: absolute;
-                    right: 0;
-                }
-            }
-
-        }
-        .answers_wrapper{
-            margin-left: 70px;
-        }
-        .more_close_answers_button_container{
-            font-size: 0.9*$font-size;
-            color: #2945af;
-            text-align: center;
-            cursor: pointer;
-            span{
-                margin: 0 20px;
-            }
-        }
-    }
-    .more_comments_button_container{
-        padding: 15px 0;
-        text-align: center;
-    }
-}
-
-.complains_modal_window_title{
+  .channelDetails_container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    height: 30px;
-    padding-right: 25px;
-    img{
-        height: 65px;
-        user-select: none;
+
+    .channel_avatar {
+      height: 50px;
+      width: 50px;
+      cursor: pointer;
     }
-    h2{
-        color: #1a2e7f;
-        margin-top: 10px;
+
+    .channelInformation_container {
+      margin-left: 8px;
+
+      .channel_title {
+        font-size: 1.1*$font_size;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .channel_subscribersCount {
+        font-size: 0.85*$font_size;
+        font-style: italic;
+      }
     }
+
+    .youtube_channel_link {
+      margin-left: 15px;
+      font-size: 2*$font-size;
+      transition: transform 0.5s;
+
+      a {
+        color: red;
+      }
+
+      &:active {
+        transform: scale(0.85);
+      }
+
+    }
+
+    .subscribe_button_container {
+      width: 150px;
+      height: 25px;
+      font-size: 15px;
+      margin-left: 60px;
+    }
+
+
+  }
+
+  .description {
+    margin-top: 12px;
+    font-size: $font_size;
+    max-height: 70px;
+    overflow: hidden;
+
+    &.description_open {
+      max-height: max-content;
+    }
+
+    .tags {
+      margin-top: 25px;
+      font-size: 0.85*$font_size;
+
+      .tag {
+        margin-right: 7px;
+        color: #8839ad;
+      }
+    }
+  }
+
+  .more_description_button {
+    margin: 10px 0 30px 0;
+    color: #1a2e7f;
+    font-weight: 400;
+    font-size: 1.7 $font_size;
+    cursor: pointer;
+    user-select: none;
+    width: max-content;
+  }
+
+  .comments_wrapper {
+    width: 98%;
+    padding: 0 13px;
+    -webkit-box-shadow: 1px 1px 12px 7px rgba(34, 60, 80, 0.2) inset;
+    -moz-box-shadow: 1px 1px 12px 7px rgba(34, 60, 80, 0.2) inset;
+    box-shadow: 1px 1px 12px 7px rgba(34, 60, 80, 0.2) inset;
+
+    .comments_sorted_Button {
+      float: right;
+      margin-top: 5px;
+      color: #2f3185;
+    }
+
+    .comment_if_user_unauthorized {
+      font-size: 14px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: left;
+
+      span {
+        color: #0033ff;
+      }
+    }
+
+    .comment_container {
+      position: relative;
+
+      .name {
+        color: #4a2594;
+        font-size: $font-size;
+        font-weight: 500;
+        padding: 0 5px;
+
+        &.nameOwner {
+          color: #5541c2;
+          background: rgba(0, 0, 0, 0.21);
+        }
+
+        &.commentOwner {
+          background: rgba(18, 23, 79, 0.83);
+          color: white;
+        }
+      }
+
+      .comment_content_wrapper {
+        .comment_buttons_container {
+          user-select: none;
+          position: absolute;
+          top: 0;
+          right: 0;
+          display: flex;
+          width: 35px;
+          justify-content: space-between;
+
+          .delete_comment_button {
+            color: red;
+          }
+
+          .spam_button {
+            color: #772f22;
+          }
+
+          .spam_button, .delete_comment_button {
+            cursor: pointer;
+            opacity: 0.2;
+            transition: opacity 0.3s;
+
+            &:hover {
+              opacity: 1;
+            }
+
+            &:active {
+              transform: scale(0.95);
+            }
+          }
+        }
+
+        .comment_rating_wrapper {
+          cursor: pointer;
+          user-select: none;
+
+          .open_close_answers_buttons_container {
+            color: blue;
+          }
+
+          .answer_button {
+            margin-left: 12px;
+            color: blue;
+          }
+
+        }
+      }
+
+
+      .input_container {
+        position: relative;
+        margin-bottom: 5px;
+
+        .input_comment {
+          border: none;
+          border-bottom: 1px solid rgba(131, 152, 225, 0.47);
+          padding: 5px 10px;
+          outline: none;
+          transition: border-bottom 0s 0.001s;
+
+          &:focus {
+            border-bottom: none;
+          }
+        }
+
+        .comment_input_buttons_container {
+          display: flex;
+          justify-content: right;
+          position: absolute;
+          right: 0;
+        }
+      }
+
+    }
+
+    .answers_wrapper {
+      margin-left: 70px;
+    }
+
+    .more_close_answers_button_container {
+      font-size: 0.9*$font-size;
+      color: #2945af;
+      text-align: center;
+      cursor: pointer;
+
+      span {
+        margin: 0 20px;
+      }
+    }
+  }
+
+  .more_comments_button_container {
+    padding: 15px 0;
+    text-align: center;
+  }
 }
-.complains_modal_window{
 
-    .complains_modal_window_radioElement{
-        margin-bottom: 10px;
-        font-size: 17px;
+.complains_modal_window_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 30px;
+  padding-right: 25px;
 
-    }
-    .complains_modal_window_selectElement{
-        margin-left: 24px;
-    }
-    .comment{
-        margin-top: 20px;
+  img {
+    height: 65px;
+    user-select: none;
+  }
 
-    }
+  h2 {
+    color: #1a2e7f;
+    margin-top: 10px;
+  }
+}
+
+.complains_modal_window {
+
+  .complains_modal_window_radioElement {
+    margin-bottom: 10px;
+    font-size: 17px;
+
+  }
+
+  .complains_modal_window_selectElement {
+    margin-left: 24px;
+  }
+
+  .comment {
+    margin-top: 20px;
+
+  }
 }
 
 

@@ -5,10 +5,12 @@ import React, {FC, useState} from "react"
 import {CommentType} from "../../../../types/Videos_Types"
 import {dateReformat} from "../../../utils/validators/string_formatting"
 import {CommentAnswer} from "./Answer"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import {getCommentAnswers} from "../../../redux/Reducers/Video_Page_Reducers/Current_Video_Reducer"
 import {AnswerInput} from "./Answer_Input";
 import {MarkAsSpamButton} from "./Mark_As_Spam_Button";
+import {DeleteCommentButton} from "./Delete_Comment_Button";
+import {MainVideoSelector} from "../../../redux/Selectors/Videos_Selector";
 
 
 export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
@@ -21,6 +23,7 @@ export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
         <CommentAnswer answer={answer} channelId={channelId} key={answer.commentId}/>))
     const [isOpenAnswers, setIsOpenAnswers] = useState(false)
     const [isShowInput, setIsShowInput] = useState(false)
+    const userChannel = useSelector(MainVideoSelector.userChannel)
     const dispatch = useDispatch()
 
     function openAnswers() {
@@ -36,7 +39,8 @@ export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
         <>
             <Comment className={m.comment_container} key={commentId}
                      author={
-                         <div className={`${m.name} ${channelId === authorChannelId && m.nameOwner}`}>
+                         <div className={`
+                         ${m.name} ${channelId === authorChannelId && m.nameOwner} ${userChannel && authorChannelId === userChannel.channelId && m.commentOwner}`}>
                              <span>{authorDisplayName}</span>
                          </div>
                      }
@@ -49,7 +53,7 @@ export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
                                  <span style={{margin: '5px'}}>{likeCount}</span>
                                  <span style={{margin: '8px'}}><DislikeOutlined/></span>
                                  {totalReplyCount > 0 &&
-                                 <span>
+                                     <span>
                                      <OpenCloseAnswers isOpenAnswers={isOpenAnswers}
                                                        closeAnswers={closeAnswers}
                                                        openAnswers={openAnswers}
@@ -61,7 +65,14 @@ export const VideoComment: FC<VideoCommentProps> = ({comment, channelId}) => {
                                         Ответить
                                  </span>
                              </div>
-                             <MarkAsSpamButton commentId={commentId}/>
+                             <div className={m.comment_buttons_container}>
+                                 <MarkAsSpamButton commentId={commentId}/>
+                                 {
+                                     userChannel && authorChannelId === userChannel.channelId &&
+                                     <DeleteCommentButton commentId={commentId}/>
+                                 }
+                             </div>
+
                          </div>
                      }
                      datetime={
@@ -117,8 +128,8 @@ const MoreCloseAnswers: FC<MoreCloseAnswersProps> = (
                 <span onClick={closeAnswers}
                       className={m.open_close_answers_button}>Скрыть ответы</span>
                 {answersNextPageToken &&
-                <span className={m.answers_button_more}
-                      onClick={openMoreAnswers}>
+                    <span className={m.answers_button_more}
+                          onClick={openMoreAnswers}>
                     Еще
                 </span>
                 }

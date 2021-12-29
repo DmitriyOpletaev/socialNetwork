@@ -75,6 +75,13 @@ function Nav() {
                         Users
                     </NavLink>
                 </Menu.Item>
+
+                <Menu.Item key="usersFacebook" icon={<TeamOutlined/>}>
+                    <NavLink to="/usersFacebook">
+                        usersFacebook
+                    </NavLink>
+                </Menu.Item>
+
                 <Menu.Item key="chat" icon={<MessageOutlined/>}>
                     <NavLink to="/chat">
                         Chat

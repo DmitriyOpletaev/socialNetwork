@@ -21,6 +21,7 @@ import {VideoPage} from "./components/Video/Video_Page";
 import {Profile} from "./components/ProfileNew/Profile";
 import {getThemeMode} from "./components/redux/Reducers/theme-reducer";
 import {AudioPlayer} from "./components/Audio_Player/AudioPlayer";
+import {FacebookUsers} from "./components/Users_Facebook/Users_Facebook";
 const LoginPage = React.lazy(() => import("./components/LoginPage/LoginPage"))
 const MusicPage = React.lazy(() => import("./components/Music/Music_Page"))
 
@@ -89,6 +90,7 @@ const App = () => {
                                     <Route path='/photos' render={() => <PhotosPage/>}/>
                                     <Route path='/videos' render={() => <VideoPage/>}/>
                                     <Route path='/users' render={() => <UsersPage/>}/>
+                                    <Route path='/usersFacebook' render={() => <FacebookUsers/>}/>
                                     <Route path='/chat' render={() => <ChatPage/>}/>
                                     <Route path='/music' render={() => <MusicPage/>}/>
                                     <Route path='/login/facebook' render={() => <div>Facebook</div>}/>

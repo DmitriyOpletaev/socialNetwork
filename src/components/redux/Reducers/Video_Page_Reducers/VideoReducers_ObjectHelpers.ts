@@ -20,7 +20,6 @@ export function setNewAnswersInComment(
         return comments
     }
 }
-
 export function createComments(commentsItems: CommentItems[]) {
     return commentsItems.map(({snippet}) => {
         const {
@@ -46,4 +45,12 @@ export function createComments(commentsItems: CommentItems[]) {
             isLoadingAnswers: false
         }
     })
+}
+
+export function addCommentHelper(){
+
+}
+
+export function deleteCommentHelper(comments:CommentType[], deletedCommentId:string){
+    return comments.filter(comment=>comment.commentId !== deletedCommentId)
 }

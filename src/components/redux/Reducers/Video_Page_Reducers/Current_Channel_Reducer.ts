@@ -217,7 +217,7 @@ export const getCurrentChannelInfo = (channelId: string): CurrentChannelThunkTyp
     try {
         dispatch(actionsCurrentChannel.setIsLoading(true))
         const channelData = await YoutubeChannelsAPI.getFullInfoChannelById(channelId)
-        const {snippet, statistics, brandingSettings, id} = channelData.items[0]
+        const {snippet, statistics, id} = channelData.items[0]
         const channelInfo = {
             id: id,
             image: snippet.thumbnails.high.url,
